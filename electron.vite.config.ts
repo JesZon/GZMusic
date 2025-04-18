@@ -2,9 +2,7 @@ import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
-import AutoImport from 'unplugin-auto-import/vite'
-import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
+import { vitePluginForArco } from '@arco-plugins/vite-vue'
 
 export default defineConfig({
   main: {
@@ -24,16 +22,8 @@ export default defineConfig({
     plugins: [
       vue(),
       VueSetupExtend(),
-      AutoImport({
-        imports: [
-          'vue',
-          {
-            'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']
-          }
-        ]
-      }),
-      Components({
-        resolvers: [NaiveUiResolver()]
+      vitePluginForArco({
+        style: 'css'
       })
     ]
   }

@@ -32,3 +32,9 @@ $ npm run build:mac
 # For Linux
 $ npm run build:linux
 ```
+
+### 页面
+1.我喜欢
+2.最近播放
+3.本地下载
+ 

@@ -21,6 +21,7 @@
     "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
+    "@arco-plugins/vite-vue": "^1.4.5",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
     "@headlessui/vue": "^1.7.23",
@@ -30,11 +31,10 @@
     "less": "^4.3.0",
     "motion-v": "^1.0.0-beta.2",
     "simplex-noise": "^4.0.3",
-    "three": "^0.175.0",
-    "unplugin-auto-import": "^19.1.2",
-    "unplugin-vue-components": "^28.5.0"
+    "three": "^0.175.0"
   },
   "devDependencies": {
+    "@arco-design/web-vue": "^2.57.0",
     "@electron-toolkit/eslint-config-prettier": "3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
@@ -48,7 +48,6 @@
     "electron-vite": "^3.1.0",
     "eslint": "^9.24.0",
     "eslint-plugin-vue": "^10.0.0",
-    "naive-ui": "^2.41.0",
     "prettier": "^3.5.3",
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7",
