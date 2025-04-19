@@ -7,38 +7,38 @@
         </div>
         <div class="icons">
             <div class="progress-container">
-                <span class="time-display" style="margin-right: 0.1rem;">0.00</span>
-                <a-slider :default-value="50" :style="{ width: '150px' }" :show-tooltip="false" />
-                <span class="time-display" style="margin-left: 0.1rem;">1.40</span>
+                <span class="time-display">{{ formatTime(currentTime) }}</span>
+                <div class="progress-bar" @click="setProgress">
+                    <div class="progress-filled" :style="{width: progressPercentage + '%'}"></div>
+                </div>
+                <span class="time-display">{{ formatTime(duration) }}</span>
             </div>
-        </div>
-        <div class="controls">
-            <svg class="prev-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="prevTrack">
-                <path d="M19 20L9 12L19 4V20Z" fill="#f9f9fb" />
-                <path d="M7 4H5V20H7V4Z" fill="#f9f9fb" />
-            </svg>
-            <svg v-if="!isPlaying" class="play-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                @click="togglePlay">
-                <path d="M8 5V19L19 12L8 5Z" fill="#f9f9fb" />
-            </svg>
-            <svg v-else class="pause-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                @click="togglePlay">
-                <path d="M6 4H10V20H6V4Z" fill="#f9f9fb" />
-                <path d="M14 4H18V20H14V4Z" fill="#f9f9fb" />
-            </svg>
-            <svg class="next-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="nextTrack">
-                <path d="M5 4L15 12L5 20V4Z" fill="#f9f9fb" />
-                <path d="M19 4H17V20H19V4Z" fill="#f9f9fb" />
-            </svg>
-            <div class="volume-control">
-                <svg class="volume-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 10V14H7L12 19V5L7 10H3Z" fill="#f9f9fb" />
-                    <path d="M16.5 12C16.5 10.23 15.48 8.71 14 7.97V16.02C15.48 15.29 16.5 13.77 16.5 12Z"
-                        fill="#f9f9fb" />
-                    <path
-                        d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23Z"
-                        fill="#f9f9fb" />
+            <div class="controls">
+                <svg class="prev-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="prevTrack">
+                    <path d="M19 20L9 12L19 4V20Z" fill="#f9f9fb"/>
+                    <path d="M7 4H5V20H7V4Z" fill="#f9f9fb"/>
                 </svg>
+                <svg v-if="!isPlaying" class="play-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="togglePlay">
+                    <path d="M8 5V19L19 12L8 5Z" fill="#f9f9fb"/>
+                </svg>
+                <svg v-else class="pause-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="togglePlay">
+                    <path d="M6 4H10V20H6V4Z" fill="#f9f9fb"/>
+                    <path d="M14 4H18V20H14V4Z" fill="#f9f9fb"/>
+                </svg>
+                <svg class="next-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="nextTrack">
+                    <path d="M5 4L15 12L5 20V4Z" fill="#f9f9fb"/>
+                    <path d="M19 4H17V20H19V4Z" fill="#f9f9fb"/>
+                </svg>
+                <div class="volume-control">
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 10V14H7L12 19V5L7 10H3Z" fill="#f9f9fb"/>
+                        <path d="M16.5 12C16.5 10.23 15.48 8.71 14 7.97V16.02C15.48 15.29 16.5 13.77 16.5 12Z" fill="#f9f9fb"/>
+                        <path d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23Z" fill="#f9f9fb"/>
+                    </svg>
+                    <div class="volume-slider" @click="setVolume">
+                        <div class="volume-filled" :style="{width: volumePercentage + '%'}"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,6 +50,20 @@ import { ref } from 'vue';
 
 // 播放状态
 const isPlaying = ref(false);
+const currentTime = ref(0);
+const duration = ref(100);
+const volume = ref(70);
+
+// 进度条和音量百分比
+const progressPercentage = ref(30);
+const volumePercentage = ref(70);
+
+// 格式化时间显示 (秒 -> mm:ss)
+const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' + secs : secs}`;
+};
 
 // 播放/暂停切换
 const togglePlay = () => {
@@ -66,58 +80,28 @@ const nextTrack = () => {
     console.log('播放下一首');
 };
 
+// 设置音量
+const setVolume = (e: MouseEvent) => {
+    const slider = e.currentTarget as HTMLElement;
+    const rect = slider.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const newVolume = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+    volume.value = newVolume;
+    volumePercentage.value = newVolume;
+};
+
+// 设置进度
+const setProgress = (e: MouseEvent) => {
+    const progressBar = e.currentTarget as HTMLElement;
+    const rect = progressBar.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const newProgress = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+    progressPercentage.value = newProgress;
+    currentTime.value = (duration.value * newProgress) / 100;
+};
 </script>
 
 <style lang="less" scoped>
-.controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 1em;
-    width: 100%;
-}
-
-.prev-btn,
-.play-btn,
-.pause-btn,
-.next-btn,
-.volume-icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.prev-btn:hover,
-.play-btn:hover,
-.pause-btn:hover,
-.next-btn:hover,
-.volume-icon:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 5px rgba(155, 64, 252, 0.8));
-}
-
-.volume-control {
-    display: flex;
-    align-items: center;
-    column-gap: 0.5em;
-}
-
-.progress-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 8px;
-    margin-bottom: 0.5em;
-    // background-color: red;
-}
-
-.time-display {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-family: 'Montserrat', sans-serif;
-}
-
 .card {
     position: relative;
     width: 19em;
@@ -130,7 +114,7 @@ const nextTrack = () => {
     color: white;
     font-family: Montserrat;
     font-weight: bold;
-    padding: 1em;
+    padding: 1em 2em 1em 1em;
     border-radius: 20px;
     overflow: hidden;
     z-index: 1;
@@ -147,10 +131,6 @@ const nextTrack = () => {
 .image:hover {
     cursor: -webkit-grab;
     cursor: grab;
-}
-
-.image {
-    user-select: none;
 }
 
 .icons svg {
@@ -331,9 +311,81 @@ const nextTrack = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
-    column-gap: 1em;
+    flex-direction: column;
+    row-gap: 1em;
     z-index: 1;
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1em;
+    width: 100%;
+}
+
+.prev-btn, .play-btn, .pause-btn, .next-btn, .volume-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.prev-btn:hover, .play-btn:hover, .pause-btn:hover, .next-btn:hover, .volume-icon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(155, 64, 252, 0.8));
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 0.5em;
+}
+
+.time-display {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.progress-bar, .volume-slider {
+    position: relative;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-bar {
+    flex: 1;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5em;
+}
+
+.volume-slider {
+    width: 60px;
+}
+
+.progress-filled, .volume-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #9b40fc, #c177f1);
+    width: 30%;
+    border-radius: 2px;
+}
+
+.volume-filled {
+    width: 70%;
 }
 
 @keyframes move {
