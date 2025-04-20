@@ -1,5 +1,4 @@
 <template>
-    <!-- From Uiverse.io by Praashoo7 -->
     <div class="card">
         <img src="./astronaut.png" alt="" class="image" />
         <div class="heading">
@@ -7,12 +6,34 @@
         </div>
         <div class="icons">
             <div class="progress-container">
-                <span class="time-display" style="margin-right: 0.1rem;">0.00</span>
+                <span class="time-display" style="margin-right: 0.1rem;">0: 00</span>
                 <a-slider :default-value="50" :style="{ width: '150px' }" :show-tooltip="false" />
-                <span class="time-display" style="margin-left: 0.1rem;">1.40</span>
+                <span class="time-display" style="margin-left: 0.1rem;">1: 40</span>
             </div>
         </div>
         <div class="controls">
+            <div @click="changePlayType()" style="padding-top: 4px;">
+                <svg v-if="getPlayType === 'cycle'" t="1745137800320" class="prev-type" viewBox="0 0 1024 1024"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M694.4 854.4H195.2l48 44.8c9.6 6.4 16 16 16 28.8-3.2 19.2-19.2 32-38.4 32-9.6 0-22.4-6.4-28.8-12.8l-108.8-96c-12.8-12.8-16-35.2 0-48L192 704c6.4-6.4 19.2-9.6 28.8-9.6 19.2 0 35.2 16 35.2 35.2 0 9.6-6.4 19.2-12.8 25.6l-41.6 38.4h496c112 0 198.4-89.6 198.4-198.4v-86.4c0-19.2 12.8-32 32-32s32 12.8 32 32v86.4c0 140.8-118.4 259.2-265.6 259.2zM329.6 169.6h496l-48-44.8c-9.6-6.4-16-16-16-28.8 3.2-19.2 19.2-32 38.4-32 9.6 0 22.4 6.4 28.8 12.8l108.8 96c12.8 12.8 16 35.2 0 48L832 320c-6.4 6.4-19.2 9.6-28.8 9.6-19.2 0-35.2-16-35.2-35.2 0-9.6 6.4-19.2 12.8-25.6l41.6-38.4H326.4C217.6 233.6 128 323.2 128 435.2v89.6c0 19.2-12.8 32-32 32s-32-12.8-32-32v-86.4C64 288 182.4 169.6 329.6 169.6z"
+                        p-id="1875" fill="#f9f9fb"></path>
+                </svg>
+                <svg v-if="getPlayType === 'single'" t="1745137903841" class="prev-type" viewBox="0 0 1024 1024"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2036" width="200" height="200">
+                    <path
+                        d="M928 476.8c-19.2 0-32 12.8-32 32v86.4c0 108.8-86.4 198.4-198.4 198.4H201.6l41.6-38.4c6.4-6.4 12.8-16 12.8-25.6 0-19.2-16-35.2-35.2-35.2-9.6 0-22.4 3.2-28.8 9.6l-108.8 99.2c-16 12.8-12.8 35.2 0 48l108.8 96c6.4 6.4 19.2 12.8 28.8 12.8 19.2 0 35.2-12.8 38.4-32 0-12.8-6.4-22.4-16-28.8l-48-44.8h499.2c147.2 0 265.6-118.4 265.6-259.2v-86.4c0-19.2-12.8-32-32-32zM96 556.8c19.2 0 32-12.8 32-32v-89.6c0-112 89.6-201.6 198.4-204.8h496l-41.6 38.4c-6.4 6.4-12.8 16-12.8 25.6 0 19.2 16 35.2 35.2 35.2 9.6 0 22.4-3.2 28.8-9.6l105.6-99.2c16-12.8 12.8-35.2 0-48l-108.8-96c-6.4-6.4-19.2-12.8-28.8-12.8-19.2 0-35.2 12.8-38.4 32 0 12.8 6.4 22.4 16 28.8l48 44.8H329.6C182.4 169.6 64 288 64 438.4v86.4c0 19.2 12.8 32 32 32z"
+                        p-id="2037" fill="#f9f9fb"></path>
+                    <path d="M544 672V352h-48L416 409.6l16 41.6 60.8-41.6V672z" p-id="2038" fill="#f9f9fb"></path>
+                </svg>
+                <svg v-if="getPlayType === 'random'" t="1745137982545" class="prev-type" viewBox="0 0 1024 1024"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2199">
+                    <path
+                        d="M844.8 665.6c-6.4-6.4-16-12.8-25.6-9.6-19.2 0-35.2 16-35.2 35.2 0 9.6 6.4 19.2 12.8 25.6l41.6 41.6c-44.8-6.4-86.4-22.4-121.6-51.2-3.2 0-3.2-3.2-6.4-6.4L332.8 304C268.8 233.6 192 195.2 99.2 195.2c-19.2 0-35.2 16-35.2 35.2s16 32 35.2 32c73.6 0 134.4 32 182.4 86.4l384 400 6.4 6.4c48 38.4 108.8 64 172.8 70.4l-48 44.8c-9.6 6.4-16 19.2-16 28.8 0 19.2 19.2 35.2 38.4 32 9.6 0 19.2-6.4 25.6-12.8l99.2-92.8c16-16 16-41.6 0-57.6l-99.2-102.4z m-3.2-556.8c-12.8-16-32-19.2-48-6.4-9.6 6.4-12.8 16-12.8 25.6 0 12.8 3.2 22.4 16 28.8l41.6 41.6c-73.6 9.6-140.8 38.4-192 89.6l-115.2 118.4c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 16 9.6 25.6 9.6s19.2-3.2 25.6-9.6l112-118.4c41.6-38.4 92.8-64 147.2-70.4l-44.8 44.8c-6.4 6.4-12.8 16-12.8 25.6 0 19.2 16 35.2 32 35.2 9.6 0 19.2-3.2 28.8-9.6L950.4 256c12.8-12.8 12.8-35.2 0-48l-108.8-99.2m-438.4 448c-9.6 0-19.2 3.2-25.6 9.6l-118.4 121.6c-48 44.8-96 67.2-160 67.2H96c-19.2 0-35.2 16-35.2 35.2s16 32 35.2 32h3.2c83.2 0 147.2-32 211.2-86.4l121.6-124.8c6.4-6.4 9.6-12.8 9.6-22.4 0-9.6-3.2-16-9.6-22.4-9.6-6.4-19.2-9.6-28.8-9.6z"
+                        p-id="2200" fill="#f9f9fb"></path>
+                </svg>
+            </div>
+
             <svg class="prev-btn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="prevTrack">
                 <path d="M19 20L9 12L19 4V20Z" fill="#f9f9fb" />
                 <path d="M7 4H5V20H7V4Z" fill="#f9f9fb" />
@@ -31,30 +52,38 @@
                 <path d="M19 4H17V20H19V4Z" fill="#f9f9fb" />
             </svg>
             <div class="volume-control">
-                <svg class="volume-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 10V14H7L12 19V5L7 10H3Z" fill="#f9f9fb" />
-                    <path d="M16.5 12C16.5 10.23 15.48 8.71 14 7.97V16.02C15.48 15.29 16.5 13.77 16.5 12Z"
-                        fill="#f9f9fb" />
-                    <path
-                        d="M14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23Z"
-                        fill="#f9f9fb" />
-                </svg>
+                <icon-sound-fill class="volume-icon" :size="24" />
             </div>
         </div>
     </div>
-
 </template>
 
 <script lang="ts" setup name="Player">
+import { computed } from 'vue';
 import { ref } from 'vue';
 
 // 播放状态
 const isPlaying = ref(false);
 
+// 播放类型
+const playList = ref(['cycle', 'single', 'random']);
+const playType = ref(0);
+
 // 播放/暂停切换
 const togglePlay = () => {
     isPlaying.value = !isPlaying.value;
 };
+
+// 播放类型切换
+const changePlayType = () => {
+    playType.value = playType.value + 1;
+    if (playType.value === 3) {
+        playType.value = 0;
+    }
+};
+const getPlayType = computed(() => {
+    return playList.value[playType.value];
+});
 
 // 上一首
 const prevTrack = () => {
@@ -69,6 +98,7 @@ const nextTrack = () => {
 </script>
 
 <style lang="less" scoped>
+
 .controls {
     display: flex;
     align-items: center;
@@ -78,6 +108,7 @@ const nextTrack = () => {
 }
 
 .prev-btn,
+.prev-type,
 .play-btn,
 .pause-btn,
 .next-btn,
@@ -89,6 +120,7 @@ const nextTrack = () => {
 }
 
 .prev-btn:hover,
+.prev-type:hover,
 .play-btn:hover,
 .pause-btn:hover,
 .next-btn:hover,
@@ -121,7 +153,7 @@ const nextTrack = () => {
 .card {
     position: relative;
     width: 19em;
-    height: 25em;
+    height: 26em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -264,45 +296,27 @@ const nextTrack = () => {
 
 .image:active+.heading::before {
     box-shadow: 240px 20px #9b40fc, 240px 25px #9b40fc, 240px 30px #9b40fc,
-        240px 35px #9b40fc, 240px 40px #9b40fc, 242px 45px #9b40fc,
-        246px 48px #9b40fc, 251px 49px #9b40fc, 256px 48px #9b40fc,
-        260px 45px #9b40fc, 262px 40px #9b40fc;
+        235px 25px #9b40fc, 235px 30px #9b40fc, 240px 35px #9b40fc, 245px 35px #9b40fc,
+        245px 30px #9b40fc, 245px 25px #9b40fc, 245px 20px #9b40fc, 245px 15px #9b40fc,
+        245px 40px #9b40fc, 250px 35px #9b40fc, 250px 30px #9b40fc, 250px 25px #9b40fc,
+        250px 20px #9b40fc, 250px 15px #9b40fc, 250px 40px #9b40fc, 250px 45px #9b40fc,
+        255px 20px #9b40fc, 255px 25px #9b40fc, 255px 30px #9b40fc, 255px 35px #9b40fc,
+        255px 40px #9b40fc, 255px 45px #9b40fc, 255px 50px #9b40fc, 260px 25px #9b40fc,
+        260px 30px #9b40fc, 260px 35px #9b40fc, 260px 40px #9b40fc, 260px 45px #9b40fc,
+        260px 50px #9b40fc, 260px 55px #9b40fc, 265px 20px #9b40fc, 265px 25px #9b40fc,
+        265px 30px #9b40fc, 265px 35px #9b40fc, 265px 40px #9b40fc, 265px 45px #9b40fc,
+        265px 50px #9b40fc, 270px 15px #9b40fc, 270px 20px #9b40fc, 270px 25px #9b40fc,
+        270px 30px #9b40fc, 270px 35px #9b40fc, 270px 40px #9b40fc, 270px 45px #9b40fc,
+        275px 15px #9b40fc, 275px 20px #9b40fc, 275px 25px #9b40fc, 275px 30px #9b40fc,
+        275px 35px #9b40fc, 275px 40px #9b40fc, 280px 20px #9b40fc, 280px 25px #9b40fc,
+        280px 30px #9b40fc, 280px 35px #9b40fc, 285px 25px #9b40fc, 285px 30px #9b40fc;
     animation: none;
     filter: blur(0);
     border-radius: 2px;
     width: 0.45em;
     height: 0.45em;
     scale: 0.65;
-    transform: translateX(9em) translateY(1em);
-}
-
-.image:active~.icons::before {
-    box-shadow: 262px 35px #9b40fc, 262px 30px #9b40fc, 262px 25px #9b40fc,
-        262px 20px #9b40fc, 275px 20px #9b40fc, 275px 24px #9b40fc,
-        275px 28px #9b40fc, 275px 32px #9b40fc, 275px 36px #9b40fc,
-        275px 40px #9b40fc, 275px 44px #9b40fc, 275px 48px #9b40fc;
-    animation: none;
-    filter: blur(0);
-    border-radius: 2px;
-    width: 0.45em;
-    height: 0.45em;
-    scale: 0.65;
-    transform: translateX(9em) translateY(1em);
-}
-
-.image:active~.icons::after {
-    box-shadow: 238px 60px #9b40fc, 242px 60px #9b40fc, 246px 60px #9b40fc,
-        250px 60px #9b40fc, 254px 60px #9b40fc, 258px 60px #9b40fc,
-        262px 60px #9b40fc, 266px 60px #9b40fc, 270px 60px #9b40fc,
-        274px 60px #9b40fc, 278px 60px #9b40fc, 282px 60px #9b40fc,
-        234px 60px #9b40fc, 234px 60px #9b40fc;
-    animation: none;
-    filter: blur(0);
-    border-radius: 2px;
-    width: 0.45em;
-    height: 0.45em;
-    scale: 0.65;
-    transform: translateX(9em) translateY(1.25em);
+    transform: translateX(7em) translateY(1em);
 }
 
 .heading::after {

@@ -71,8 +71,9 @@ const scrollToActiveLine = () => {
 .glass-container {
     width: 60%;
     height: 350px;
-    background-color: rgba(255, 255, 255, 0.2);
+    // background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
+    user-select: none;
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);

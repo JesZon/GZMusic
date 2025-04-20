@@ -7,7 +7,6 @@
             <ContentBar />
         </div>
     </div>
-    <button @click="toggleExpand">按钮</button>
 </template>
 
 <script lang="ts" setup name="CardPage">
@@ -15,11 +14,11 @@ import { ref } from 'vue';
 import ContentBar from './ContentBar/index.vue';
 import Player from './Player/index.vue';
 
-const expanded = ref(false);
+const expanded = ref(true);
 
-const toggleExpand = () => {
-    expanded.value = !expanded.value;
-};
+// const toggleExpand = () => {
+//     expanded.value = !expanded.value;
+// };
 </script>
 
 <style lang="less" scoped>

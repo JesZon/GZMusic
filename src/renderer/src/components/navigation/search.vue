@@ -48,6 +48,9 @@
 </script>
 
 <style lang="less" scoped>
+#wormhole-icon{
+    cursor: pointer;
+}
 /* From Uiverse.io by Amankrah */
 .galaxy {
     height: 800px;
