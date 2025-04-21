@@ -1,119 +1,631 @@
 <template>
-    <div class="container">
-        <button class="Btn instagram">
-            <svg class="svgIcon" viewBox="0 0 448 512" height="1.5em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
-                </path>
-            </svg>
-            <span class="text">收</span>
-        </button>
+    <div class="nebula"></div>
+    <div class="grid-plane"></div>
+    <div class="stars-container">
+        <div class="star-layer"></div>
+        <div class="star-layer"></div>
+        <div class="star-layer"></div>
+    </div>
 
-        <button class="Btn youtube">
-            <svg class="svgIcon" viewBox="0 0 576 512" height="1.5em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M549.655 148.28c-6.281-23.64-24.041-42.396-47.655-48.685C462.923 85 288 85 288 85S113.077 85 74 99.595c-23.614 6.289-41.374 25.045-47.655 48.685-12.614 47.328-12.614 147.717-12.614 147.717s0 100.39 12.614 147.718c6.281 23.64 24.041 42.396 47.655 48.684C113.077 427 288 427 288 427s174.923 0 214-14.595c23.614-6.289 41.374-25.045 47.655-48.685 12.614-47.328 12.614-147.718 12.614-147.718s0-100.389-12.614-147.717zM240 336V176l144 80-144 80z">
-                </path>
-            </svg>
-            <span class="text">YouTube</span>
-        </button>
-
-        <button class="Btn twitter">
-            <svg class="svgIcon" viewBox="0 0 512 512" height="1.5em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M512 97.248c-18.84 8.36-39.082 14.008-60.277 16.54 21.62-12.92 38.212-33.216 46.042-57.45-20.242 12-42.71 20.67-66.61 25.41-19.128-20.412-46.344-33.21-76.51-33.21-58 0-105 47-105 105 0 8.22.926 16.188 2.714 23.914-87.18-4.376-164.66-46.2-216.45-109.97-9.066 15.508-14.254 33.586-14.254 52.836 0 36.37 18.54 68.542 46.844 87.428-17.272-.554-33.52-5.286-47.754-13.158v1.32c0 50.828 36.13 93.15 84.198 102.79-8.826 2.396-18.14 3.686-27.734 3.686-6.78 0-13.34-.664-19.676-1.902 13.36 41.77 52.164 72.198 98.116 73.052-35.96 28.17-81.38 44.99-130.76 44.99-8.54 0-16.94-.5-25.14-1.476 46.684 29.922 101.99 47.31 161.18 47.31 193.32 0 298.924-160.078 298.924-298.926 0-4.554-.106-9.086-.306-13.594 20.546-14.824 38.364-33.298 52.456-54.422z">
-                </path>
-            </svg>
-            <span class="text">Twitter</span>
+    <div class="button-container">
+        <button class="holo-button">
+            <div class="button-text">{{ props.title }}</div>
+            <div class="holo-glow"></div>
+            <div class="button-glitch"></div>
+            <div class="corner-accents">
+                <div class="corner-accent"></div>
+                <div class="corner-accent"></div>
+                <div class="corner-accent"></div>
+                <div class="corner-accent"></div>
+            </div>
+            <div class="holo-lines">
+                <div class="holo-line"></div>
+                <div class="holo-line"></div>
+                <div class="holo-line"></div>
+                <div class="holo-line"></div>
+            </div>
+            <div class="scan-line"></div>
+            <div class="holo-particles">
+                <div class="holo-particle"></div>
+                <div class="holo-particle"></div>
+                <div class="holo-particle"></div>
+                <div class="holo-particle"></div>
+                <div class="holo-particle"></div>
+                <div class="holo-particle"></div>
+            </div>
         </button>
     </div>
 
 </template>
 
 <script lang="ts" setup name="SettingBut">
+const props = defineProps({
+    title: { type: String, required: true },
+})
 </script>
 
 <style lang="less" scoped>
-.container {
-    display: flex;
-}
-
-.Btn {
-    border: none;
-    border-radius: 20%;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    margin-left: 10px;
-}
-
-.instagram {
-    background: #f09433;
-    background: -moz-linear-gradient(45deg,
-            #f09433 0%,
-            #e6683c 25%,
-            #dc2743 50%,
-            #cc2366 75%,
-            #bc1888 100%);
-    background: -webkit-linear-gradient(45deg,
-            #f09433 0%,
-            #e6683c 25%,
-            #dc2743 50%,
-            #cc2366 75%,
-            #bc1888 100%);
-    background: linear-gradient(45deg,
-            #f09433 0%,
-            #e6683c 25%,
-            #dc2743 50%,
-            #cc2366 75%,
-            #bc1888 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
-}
-
-.youtube {
-    background-color: #ff0000;
-}
-
-.twitter {
-    background-color: #1da1f2;
-}
-
-.Btn:hover {
-    width: 110px;
-    transition-duration: 0.4s;
-    border-radius: 30px;
-}
-
-.Btn:hover .text {
-    opacity: 1;
-    transition-duration: 0.4s;
-}
-
-.Btn:hover .svgIcon {
-    opacity: 0;
-    transition-duration: 0.3s;
-}
-
-.text {
+/* From Uiverse.io by reglobby */
+.stars-container {
     position: absolute;
-    color: rgb(255, 255, 255);
-    width: 120px;
-    font-weight: 600;
+    width: 100%;
+    height: 100%;
+    perspective: 500px;
+    transform-style: preserve-3d;
+}
+
+.star-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+}
+
+.star-layer:nth-child(1) {
+    transform: translateZ(-50px);
+    animation: star-drift 150s linear infinite;
+}
+
+.star-layer:nth-child(2) {
+    transform: translateZ(-100px);
+    animation: star-drift 200s linear infinite reverse;
+    opacity: 0.6;
+}
+
+.star-layer:nth-child(3) {
+    transform: translateZ(-200px);
+    animation: star-drift 250s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes star-drift {
+    0% {
+        transform: translateZ(-50px) translateY(0);
+    }
+
+    100% {
+        transform: translateZ(-50px) translateY(100%);
+    }
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.star-layer::before,
+.star-layer::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.star-layer:nth-child(1)::before {
+    background-image: radial-gradient(1px 1px at 10% 10%, white 100%, transparent),
+        radial-gradient(1px 1px at 20% 20%, white 100%, transparent),
+        radial-gradient(2px 2px at 30% 30%, white 100%, transparent),
+        radial-gradient(1px 1px at 40% 40%, white 100%, transparent),
+        radial-gradient(2px 2px at 50% 50%, white 100%, transparent),
+        radial-gradient(1px 1px at 60% 60%, white 100%, transparent),
+        radial-gradient(2px 2px at 70% 70%, white 100%, transparent),
+        radial-gradient(1px 1px at 80% 80%, white 100%, transparent),
+        radial-gradient(2px 2px at 90% 90%, white 100%, transparent),
+        radial-gradient(1px 1px at 15% 85%, white 100%, transparent);
+}
+
+.nebula {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    background: radial-gradient(ellipse at 30% 30%,
+            rgba(63, 0, 113, 0.3) 0%,
+            rgba(63, 0, 113, 0) 70%),
+        radial-gradient(ellipse at 70% 60%,
+            rgba(0, 113, 167, 0.3) 0%,
+            rgba(0, 113, 167, 0) 70%),
+        radial-gradient(ellipse at 50% 50%,
+            rgba(167, 0, 157, 0.2) 0%,
+            rgba(167, 0, 157, 0) 70%);
+    filter: blur(30px);
+    opacity: 0.5;
+    animation: nebula-shift 30s infinite alternate ease-in-out;
+}
+
+@keyframes nebula-shift {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 0.4;
+    }
+}
+
+.grid-plane {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: linear-gradient(rgba(0, 162, 255, 0.15) 1px,
+            transparent 1px),
+        linear-gradient(90deg, rgba(0, 162, 255, 0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: center;
+    animation: grid-move 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes grid-move {
+    0% {
+        transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+
+    100% {
+        transform: perspective(500px) rotateX(60deg) translateY(40px);
+    }
+}
+
+.button-container {
+    position: relative;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    z-index: 10;
+}
+
+.holo-button {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background: rgba(10, 10, 30, 0.6);
+    border: none;
+    color: rgba(0, 221, 255, 0.8);
+    font-family: "Orbitron", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(0, 221, 255, 0.5);
+    cursor: pointer;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    z-index: 5;
+    border-radius: 2px;
+}
+
+.holo-button::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: linear-gradient(45deg,
+            rgba(0, 0, 40, 0.8) 0%,
+            rgba(0, 20, 50, 0.8) 50%,
+            rgba(5, 10, 30, 0.8) 100%);
+    z-index: -1;
+    border-radius: 1px;
+}
+
+.button-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.button-border::before,
+.button-border::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px rgba(0, 221, 255, 0.7);
+    animation: border-flow 3s infinite;
+}
+
+.button-border::before {
+    border-top-color: rgba(0, 221, 255, 0.8);
+    border-left-color: rgba(0, 221, 255, 0.8);
+    filter: drop-shadow(0 0 5px rgba(0, 221, 255, 0.7));
+}
+
+.button-border::after {
+    border-bottom-color: rgba(255, 0, 222, 0.8);
+    border-right-color: rgba(255, 0, 222, 0.8);
+    filter: drop-shadow(0 0 5px rgba(255, 0, 222, 0.7));
+}
+
+@keyframes border-flow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.03);
+        opacity: 0.8;
+    }
+}
+
+.holo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 221, 255, 0.2) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+    filter: blur(10px);
+    animation: glow-pulse 3s infinite alternate;
+}
+
+@keyframes glow-pulse {
+    0% {
+        opacity: 0.4;
+        filter: blur(10px) brightness(0.8);
+    }
+
+    100% {
+        opacity: 0.7;
+        filter: blur(15px) brightness(1.2);
+    }
+}
+
+/* Световые линии */
+.holo-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.holo-line {
+    position: absolute;
+    background: rgba(0, 221, 255, 0.5);
+    filter: blur(1px);
+}
+
+.holo-line:nth-child(1) {
+    top: 0;
+    left: 30px;
+    width: 1.5px;
+    height: 100%;
+    animation: line-pulse 2s infinite alternate;
+    animation-delay: -0.5s;
+}
+
+.holo-line:nth-child(2) {
+    top: 0;
+    right: 30px;
+    width: 1.5px;
+    height: 100%;
+    animation: line-pulse 2s infinite alternate;
+    animation-delay: -1s;
+}
+
+.holo-line:nth-child(3) {
+    top: 15px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    animation: line-pulse 2s infinite alternate;
+    animation-delay: -1.5s;
+}
+
+.holo-line:nth-child(4) {
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    animation: line-pulse 2s infinite alternate;
+    animation-delay: -2s;
+}
+
+@keyframes line-pulse {
+    0% {
+        opacity: 0.3;
+        background: rgba(0, 221, 255, 0.5);
+    }
+
+    100% {
+        opacity: 0.7;
+        background: rgba(255, 0, 222, 0.5);
+    }
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 221, 255, 0.5) 20%,
+            rgba(255, 255, 255, 0.8) 50%,
+            rgba(255, 0, 222, 0.5) 80%,
+            rgba(0, 0, 0, 0) 100%);
+    top: 0;
+    left: 0;
+    filter: blur(1px);
     opacity: 0;
-    transition-duration: 0.4s;
+    z-index: 2;
+    pointer-events: none;
+    animation: scan 2s infinite;
 }
 
-.svgIcon {
-    transition-duration: 0.3s;
+@keyframes scan {
+    0% {
+        top: -5px;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.7;
+    }
+
+    85% {
+        opacity: 0.7;
+    }
+
+    100% {
+        top: 85px;
+        opacity: 0;
+    }
 }
 
-.svgIcon path {
-    fill: white;
+/* Частицы */
+.holo-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.holo-particle {
+    position: absolute;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 221, 255, 0.7);
+    border-radius: 50%;
+    filter: blur(1px);
+    opacity: 0;
+    pointer-events: none;
+    animation: particle-float 3s infinite ease-out;
+}
+
+.holo-particle:nth-child(1) {
+    width: 3px;
+    height: 3px;
+    top: 70%;
+    left: 30%;
+    animation-delay: 0.2s;
+}
+
+.holo-particle:nth-child(2) {
+    width: 2px;
+    height: 2px;
+    top: 60%;
+    left: 40%;
+    animation-delay: 0.5s;
+}
+
+.holo-particle:nth-child(3) {
+    width: 4px;
+    height: 4px;
+    top: 80%;
+    left: 60%;
+    animation-delay: 0.8s;
+}
+
+.holo-particle:nth-child(4) {
+    width: 2px;
+    height: 2px;
+    top: 70%;
+    left: 70%;
+    animation-delay: 1.1s;
+}
+
+.holo-particle:nth-child(5) {
+    width: 3px;
+    height: 3px;
+    top: 75%;
+    left: 50%;
+    animation-delay: 1.4s;
+}
+
+.holo-particle:nth-child(6) {
+    width: 2px;
+    height: 2px;
+    top: 65%;
+    left: 65%;
+    animation-delay: 1.7s;
+}
+
+@keyframes particle-float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-40px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.corner-accents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.corner-accent {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(0, 221, 255, 0.7);
+}
+
+.corner-accent:nth-child(1) {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.corner-accent:nth-child(2) {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+.corner-accent:nth-child(3) {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+.corner-accent:nth-child(4) {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.button-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    animation: button-glitch 8s infinite;
+}
+
+@keyframes button-glitch {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    94%,
+    96% {
+        opacity: 0;
+    }
+
+    94.5% {
+        opacity: 0.8;
+        transform: translate(5px, -2px) skew(-5deg, 2deg);
+        background: rgba(255, 0, 222, 0.2);
+    }
+
+    95% {
+        opacity: 0.8;
+        transform: translate(-5px, 2px) skew(5deg, -2deg);
+        background: rgba(0, 221, 255, 0.2);
+    }
+
+    95.5% {
+        opacity: 0.8;
+        transform: translate(2px, 0) skew(-2deg, 0);
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.holo-button:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
+    transition: all 0.2s ease;
+}
+
+.holo-button:hover .holo-glow {
+    background: radial-gradient(ellipse at center,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(0, 221, 255, 0.2) 40%,
+            rgba(0, 0, 0, 0) 70%);
+    animation: glow-pulse-hover 1.5s infinite alternate;
+}
+
+@keyframes glow-pulse-hover {
+    0% {
+        opacity: 0.6;
+        filter: blur(10px) brightness(1);
+    }
+
+    100% {
+        opacity: 0.9;
+        filter: blur(15px) brightness(1.5);
+    }
+}
+
+.holo-button:active {
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+}
+
+.holo-button:active .holo-glow {
+    opacity: 1;
+    background: radial-gradient(ellipse at center,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 0, 222, 0.3) 40%,
+            rgba(0, 0, 0, 0) 70%);
+}
+
+.button-text {
+    position: relative;
+    z-index: 5;
+    transform-style: preserve-3d;
+    text-transform: uppercase;
 }
 </style>

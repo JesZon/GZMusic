@@ -16,7 +16,7 @@
                 </li>
                 <li>
                     <span>本地下载</span>
-                    <a href="#"><img src="./images/downloads.png"></a>
+                    <a href="#"><img src="./images/download.png"></a>
                 </li>
             </ul>
         </div>

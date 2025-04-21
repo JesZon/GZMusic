@@ -1,366 +1,458 @@
 <template>
-    <!-- From Uiverse.io by Amankrah -->
-    <div class="galaxy"></div>
-    <div id="search-container">
-        <div class="nebula"></div>
-        <div class="starfield"></div>
-        <div class="cosmic-dust"></div>
-        <div class="cosmic-dust"></div>
-        <div class="cosmic-dust"></div>
+    <div class="input-container">
+        <div class="input-field-container">
+            <input type="text" class="holo-input" placeholder="音乐搜索" />
+            <div class="input-border"></div>
+            <div class="holo-scan-line"></div>
+            <div class="input-glow"></div>
+            <div class="input-active-indicator"></div>
 
-        <div class="stardust"></div>
-
-        <div class="cosmic-ring"></div>
-
-        <div id="main">
-            <input class="input" name="text" type="text" placeholder="搜索音乐" />
-            <div id="input-mask"></div>
-            <div id="cosmic-glow"></div>
-            <div class="wormhole-border"></div>
-            <div id="wormhole-icon">
-                <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#a9c7ff" fill="none"
-                    height="24" width="24" viewBox="0 0 24 24">
-                    <circle r="10" cy="12" cx="12"></circle>
-                    <path
-                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                    </path>
-                    <path d="M2 12h20"></path>
-                </svg>
+            <div class="input-data-visualization">
+                <div class="data-segment" style="--index: 1;"></div>
+                <div class="data-segment" style="--index: 2;"></div>
+                <div class="data-segment" style="--index: 3;"></div>
+                <div class="data-segment" style="--index: 4;"></div>
+                <div class="data-segment" style="--index: 5;"></div>
+                <div class="data-segment" style="--index: 6;"></div>
+                <div class="data-segment" style="--index: 7;"></div>
+                <div class="data-segment" style="--index: 8;"></div>
+                <div class="data-segment" style="--index: 9;"></div>
+                <div class="data-segment" style="--index: 10;"></div>
+                <div class="data-segment" style="--index: 11;"></div>
+                <div class="data-segment" style="--index: 12;"></div>
+                <div class="data-segment" style="--index: 13;"></div>
+                <div class="data-segment" style="--index: 14;"></div>
+                <div class="data-segment" style="--index: 15;"></div>
+                <div class="data-segment" style="--index: 16;"></div>
+                <div class="data-segment" style="--index: 17;"></div>
+                <div class="data-segment" style="--index: 18;"></div>
+                <div class="data-segment" style="--index: 19;"></div>
+                <div class="data-segment" style="--index: 20;"></div>
             </div>
-            <div id="search-icon">
-                <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="url(#cosmic-search)"
-                    fill="none" height="24" width="24" viewBox="0 0 24 24">
-                    <circle r="8" cy="11" cx="11"></circle>
-                    <line y2="16.65" x2="16.65" y1="21" x1="21"></line>
-                    <defs>
-                        <linearGradient gradientTransform="rotate(45)" id="cosmic-search">
-                            <stop stop-color="#a9c7ff" offset="0%"></stop>
-                            <stop stop-color="#6e8cff" offset="100%"></stop>
-                        </linearGradient>
-                    </defs>
-                </svg>
+
+            <div class="input-particles">
+                <div class="input-particle" style="--index: 1; top: 20%; left: 10%;"></div>
+                <div class="input-particle" style="--index: 2; top: 65%; left: 25%;"></div>
+                <div class="input-particle" style="--index: 3; top: 40%; left: 40%;"></div>
+                <div class="input-particle" style="--index: 4; top: 75%; left: 60%;"></div>
+                <div class="input-particle" style="--index: 5; top: 30%; left: 75%;"></div>
+                <div class="input-particle" style="--index: 6; top: 60%; left: 90%;"></div>
             </div>
+
+            <div class="input-holo-overlay"></div>
+
+            <div class="interface-lines">
+                <div class="interface-line"></div>
+                <div class="interface-line"></div>
+                <div class="interface-line"></div>
+                <div class="interface-line"></div>
+            </div>
+
+            <div class="hex-decoration"></div>
+            <div class="power-indicator"></div>
         </div>
     </div>
+
 </template>
 
 <script lang="ts" setup name="Search">
 </script>
 
 <style lang="less" scoped>
-#wormhole-icon{
+.input-container {
+    position: fixed;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+.input-field-container {
+    position: relative;
+    width: 100%;
+}
+
+.holo-input {
+    width: 100%;
+    height: 40px;
+    background: rgba(0, 12, 36, 0.7);
+    border: none;
+    outline: none;
+    padding: 0 60px 0 20px;
+    color: rgba(0, 195, 255, 0.9);
+    font-family: "Orbitron", sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 4px;
+    box-shadow:
+        0 0 15px rgba(0, 140, 255, 0.3),
+        inset 0 0 10px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 160, 255, 0.7);
+    z-index: 1;
+}
+
+.holo-input::placeholder {
+    color: rgba(0, 110, 200, 0.4);
+    transition: all 0.3s ease;
+}
+
+.input-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border: 1px solid rgba(0, 150, 255, 0.4);
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.input-border::before,
+.input-border::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 150, 255, 0.7);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.input-border::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.input-border::after {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+}
+
+.holo-scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 150, 255, 0.5) 20%,
+            rgba(255, 255, 255, 0.8) 50%,
+            rgba(0, 150, 255, 0.5) 80%,
+            rgba(0, 0, 0, 0) 100%);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: blur(1px);
+    z-index: 3;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.input-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 150, 255, 0.1) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    opacity: 0;
+    border-radius: 4px;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.input-active-indicator {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 150, 255, 0.7);
+    border-radius: 50%;
+    right: 20px;
+    top: 25px;
+    opacity: 0.3;
+    box-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+    transition: all 0.3s ease;
+    z-index: 2;
     cursor: pointer;
 }
-/* From Uiverse.io by Amankrah */
-.galaxy {
-    height: 800px;
-    width: 800px;
-    background-image: radial-gradient(#ffffff 1px, transparent 1px),
-        radial-gradient(#ffffff 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position:
-        0 0,
-        25px 25px;
+
+.input-data-visualization {
     position: absolute;
-    z-index: -1;
-    animation: twinkle 5s infinite;
+    width: calc(100% - 40px);
+    height: 3px;
+    bottom: 12px;
+    left: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
-@keyframes twinkle {
+.data-segment {
+    width: 4%;
+    height: 100%;
+    background: rgba(0, 150, 255, 0.3);
+    transition: all 0.5s ease;
+}
 
-    0%,
+.data-segment:nth-child(even) {
+    height: 5px;
+    transform: translateY(-1px);
+}
+
+.input-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.input-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0, 150, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(1px);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 150, 255, 0.7);
+}
+
+.input-holo-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(90deg,
+            rgba(0, 150, 255, 0.05) 25%,
+            rgba(0, 150, 255, 0.02) 50%,
+            rgba(0, 150, 255, 0.05) 75%);
+    background-size: 8px 100%;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 4;
+    mix-blend-mode: overlay;
+}
+
+.interface-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.interface-line {
+    position: absolute;
+    background: rgba(0, 150, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.interface-line:nth-child(1) {
+    width: 20px;
+    height: 1px;
+    top: 15px;
+    right: 15px;
+}
+
+.interface-line:nth-child(2) {
+    width: 1px;
+    height: 20px;
+    top: 15px;
+    right: 15px;
+}
+
+.interface-line:nth-child(3) {
+    width: 1px;
+    height: 20px;
+    bottom: 15px;
+    left: 15px;
+}
+
+.interface-line:nth-child(4) {
+    width: 20px;
+    height: 1px;
+    bottom: 15px;
+    left: 15px;
+}
+
+.hex-decoration {
+    position: absolute;
+    width: 30px;
+    height: 34px;
+    background: transparent;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 1px solid rgba(0, 150, 255, 0.3);
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+@keyframes scan-animation {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
     100% {
-        opacity: 0.5;
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes data-pulse {
+    0% {
+        transform: scaleY(1);
     }
 
     50% {
-        opacity: 1;
+        transform: scaleY(1.8);
     }
-}
 
-.stardust,
-.cosmic-ring,
-.starfield,
-.nebula {
-    max-height: 70px;
-    max-width: 314px;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    overflow: hidden;
-    z-index: -1;
-    border-radius: 12px;
-    filter: blur(3px);
-}
-
-.input {
-    background-color: #05071b;
-    border: none;
-    width: 501px;
-    height: 56px;
-    border-radius: 10px;
-    color: #a9c7ff;
-    padding-inline: 59px;
-    font-size: 18px;
-}
-
-#search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.input::placeholder {
-    color: #6e8cff;
-}
-
-.input:focus {
-    outline: none;
-}
-
-#main:focus-within>#input-mask {
-    display: none;
-}
-
-#input-mask {
-    pointer-events: none;
-    width: 100px;
-    height: 20px;
-    position: absolute;
-    background: linear-gradient(90deg, transparent, #05071b);
-    top: 18px;
-    left: 70px;
-}
-
-#cosmic-glow {
-    pointer-events: none;
-    width: 30px;
-    height: 20px;
-    position: absolute;
-    background: #4d6dff;
-    top: 10px;
-    left: 5px;
-    filter: blur(20px);
-    opacity: 0.8;
-    transition: all 2s;
-}
-
-#main:hover>#cosmic-glow {
-    opacity: 0;
-}
-
-.stardust {
-    max-height: 63px;
-    max-width: 307px;
-    border-radius: 10px;
-    filter: blur(2px);
-}
-
-.stardust::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(83deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    filter: brightness(1.4);
-    background-image: conic-gradient(rgba(0, 0, 0, 0) 0%,
-            #4d6dff,
-            rgba(0, 0, 0, 0) 8%,
-            rgba(0, 0, 0, 0) 50%,
-            #6e8cff,
-            rgba(0, 0, 0, 0) 58%);
-    transition: all 2s;
-}
-
-.cosmic-ring {
-    max-height: 59px;
-    max-width: 303px;
-    border-radius: 11px;
-    filter: blur(0.5px);
-}
-
-.cosmic-ring::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(70deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    filter: brightness(1.3);
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(#05071b,
-            #4d6dff 5%,
-            #05071b 14%,
-            #05071b 50%,
-            #6e8cff 60%,
-            #05071b 64%);
-    transition: all 2s;
-}
-
-.starfield {
-    max-height: 65px;
-    max-width: 312px;
-}
-
-.starfield::before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(82deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(rgba(0, 0, 0, 0),
-            #1c2452,
-            rgba(0, 0, 0, 0) 10%,
-            rgba(0, 0, 0, 0) 50%,
-            #2a3875,
-            rgba(0, 0, 0, 0) 60%);
-    transition: all 2s;
-}
-
-#search-container:hover>.starfield::before {
-    transform: translate(-50%, -50%) rotate(-98deg);
-}
-
-#search-container:hover>.nebula::before {
-    transform: translate(-50%, -50%) rotate(-120deg);
-}
-
-#search-container:hover>.stardust::before {
-    transform: translate(-50%, -50%) rotate(-97deg);
-}
-
-#search-container:hover>.cosmic-ring::before {
-    transform: translate(-50%, -50%) rotate(-110deg);
-}
-
-#search-container:focus-within>.starfield::before {
-    transform: translate(-50%, -50%) rotate(442deg);
-    transition: all 4s;
-}
-
-#search-container:focus-within>.nebula::before {
-    transform: translate(-50%, -50%) rotate(420deg);
-    transition: all 4s;
-}
-
-#search-container:focus-within>.stardust::before {
-    transform: translate(-50%, -50%) rotate(443deg);
-    transition: all 4s;
-}
-
-#search-container:focus-within>.cosmic-ring::before {
-    transform: translate(-50%, -50%) rotate(430deg);
-    transition: all 4s;
-}
-
-.nebula {
-    overflow: hidden;
-    filter: blur(30px);
-    opacity: 0.4;
-    max-height: 130px;
-    max-width: 354px;
-}
-
-.nebula:before {
-    content: "";
-    z-index: -2;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(60deg);
-    position: absolute;
-    width: 999px;
-    height: 999px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    background-image: conic-gradient(#000,
-            #4d6dff 5%,
-            #000 38%,
-            #000 50%,
-            #6e8cff 60%,
-            #000 87%);
-    transition: all 2s;
-}
-
-#wormhole-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    max-height: 40px;
-    max-width: 38px;
-    height: 100%;
-    width: 100%;
-    isolation: isolate;
-    overflow: hidden;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #1c2452, #05071b, #2a3875);
-    border: 1px solid transparent;
-}
-
-.wormhole-border {
-    height: 42px;
-    width: 40px;
-    position: absolute;
-    overflow: hidden;
-    top: 7px;
-    right: 7px;
-    border-radius: 10px;
-}
-
-.wormhole-border::before {
-    content: "";
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    filter: brightness(1.35);
-    background-image: conic-gradient(rgba(0, 0, 0, 0),
-            #4d6dff,
-            rgba(0, 0, 0, 0) 50%,
-            rgba(0, 0, 0, 0) 50%,
-            #6e8cff,
-            rgba(0, 0, 0, 0) 100%);
-    animation: rotate 4s linear infinite;
-}
-
-#main {
-    position: relative;
-}
-
-#search-icon {
-    position: absolute;
-    left: 20px;
-    top: 15px;
-}
-
-@keyframes rotate {
     100% {
-        transform: translate(-50%, -50%) rotate(450deg);
+        transform: scaleY(1);
     }
+}
+
+@keyframes particle-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.holo-input:focus {
+    background: rgba(0, 22, 46, 0.8);
+    box-shadow:
+        0 0 20px rgba(0, 150, 255, 0.4),
+        inset 0 0 15px rgba(0, 0, 0, 0.9);
+    // color: rgba(0, 210, 255, 1);
+    color: white;
+}
+
+.holo-input:focus::placeholder {
+    color: rgba(0, 150, 255, 0.3);
+    transform: translateX(10px);
+}
+
+.holo-input:focus~.input-border {
+    border-color: rgba(0, 180, 255, 0.7);
+}
+
+.holo-input:focus~.input-border::before,
+.holo-input:focus~.input-border::after {
+    border-color: rgba(0, 180, 255, 1);
+    width: 30px;
+    height: 30px;
+}
+
+.holo-input:focus~.holo-scan-line {
+    opacity: 1;
+    animation: scan-animation 2s infinite ease-in-out;
+}
+
+.holo-input:focus~.input-glow {
+    opacity: 1;
+}
+
+.holo-input:focus~.input-active-indicator {
+    opacity: 1;
+    background: rgba(0, 200, 255, 1);
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.7);
+    transform: scale(1.2);
+}
+
+.holo-input:focus~.input-data-visualization {
+    opacity: 1;
+}
+
+.holo-input:focus~.input-data-visualization .data-segment {
+    animation: data-pulse 2s infinite;
+    animation-delay: calc(var(--index) * 0.1s);
+}
+
+.holo-input:focus~.interface-lines .interface-line {
+    background: rgba(0, 200, 255, 0.6);
+}
+
+.holo-input:focus~.hex-decoration {
+    border-color: rgba(0, 200, 255, 0.6);
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+    transform: translateY(-50%) rotate(30deg);
+}
+
+.holo-input:focus~.input-particles .input-particle {
+    opacity: 1;
+    animation: particle-float 3s infinite ease-in-out;
+    animation-delay: calc(var(--index) * 0.2s);
+}
+
+.holo-input:hover {
+    background: rgba(0, 15, 40, 0.75);
+}
+
+.holo-input:hover~.input-active-indicator {
+    opacity: 0.6;
+}
+
+.holo-input:hover~.hex-decoration {
+    border-color: rgba(0, 180, 255, 0.5);
+}
+
+.power-indicator {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            rgba(0, 180, 255, 0.7) 0%,
+            rgba(0, 180, 255, 0.3) 100%);
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 3;
+}
+
+.holo-input:focus~.power-indicator {
+    transform: scaleX(1);
 }
 </style>
