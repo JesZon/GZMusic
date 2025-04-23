@@ -1,36 +1,48 @@
 <template>
     <div class="Content">
-        <div class="left" :style="{ width: expanded ? '40%' : '10%' }">
+        <div class="left" :style="{ width: RetrievingReleasing ? '40%' : '10%' }">
             <Player />
         </div>
-        <div class="right" :style="{ width: expanded ? '60%' : '90%' }">
+        <div class="right" :style="{ width: RetrievingReleasing ? '60%' : '90%' }">
             <ContentBar />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup name="CardPage">
-import { ref } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import ContentBar from './ContentBar/index.vue';
 import Player from './Player/index.vue';
+import { usePageStatus } from '@renderer/store/modules/PageStatus'
+import { storeToRefs } from 'pinia';
 
-const expanded = ref(true);
+const PageStatus = usePageStatus();
+const { RetrievingReleasing } = storeToRefs(PageStatus)
 
-// const toggleExpand = () => {
-//     expanded.value = !expanded.value;
-// };
+const handleEscKey = (event) => {
+  if (event.key === 'Escape') {
+    PageStatus.setRR()
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', handleEscKey);
+});
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleEscKey);
+});
+
 </script>
 
 <style lang="less" scoped>
 .Content{
     width: 100vw;
-    height: 500px;
+    height: 80vh;
 }
 
 .left{
     float: left;
-    height: 500px;
-    // background-color: rgb(124, 123, 123);
+    height: 100%;
     transition: width 0.5s ease;
 
     display: flex;
@@ -40,10 +52,8 @@ const expanded = ref(true);
 
 .right{
     float: right;
-    height: 500px;
-    // background-color: rgb(221, 221, 221);
+    height: 100%;
     transition: width 0.5s ease;
-
     display: flex;
     align-items: center; /* 垂直居中 */
     justify-content: center; /* 水平居中 */

@@ -18,6 +18,14 @@
                     <span>本地下载</span>
                     <a href="#"><img src="./images/download.png"></a>
                 </li>
+                <li>
+                    <span>设&nbsp;&nbsp;置</span>
+                    <a href="#"><img src="./images/setting.png"></a>
+                </li>
+                <li>
+                    <span>装&nbsp;&nbsp;扮</span>
+                    <a href="#"><img src="./images/background.png"></a>
+                </li>
             </ul>
         </div>
     </div>

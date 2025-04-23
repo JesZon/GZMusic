@@ -61,7 +61,7 @@
 <style lang="less" scoped>
 .input-container {
     position: fixed;
-    width: 400px;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
