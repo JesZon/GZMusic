@@ -121,6 +121,7 @@ import { computed, onMounted, onUnmounted } from 'vue';
 import { ref } from 'vue';
 import { usePageStatus } from '@renderer/store/modules/PageStatus'
 import { storeToRefs } from 'pinia';
+import emitter from '@renderer/utils/emitter';
 
 const PageStatus = usePageStatus();
 const { setRR } = PageStatus
@@ -135,7 +136,7 @@ const playType = ref(0);
 
 const handleEscKey = (event) => {
     if (event.key === ' ') {
-        isPlaying.value = !isPlaying.value;
+        togglePlay();
     }
 };
 onMounted(() => {
@@ -149,6 +150,7 @@ onUnmounted(() => {
 // 播放/暂停切换
 const togglePlay = () => {
     isPlaying.value = !isPlaying.value;
+    emitter.emit('startPlay', isPlaying.value);
 };
 
 // 播放类型切换
