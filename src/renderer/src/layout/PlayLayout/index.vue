@@ -3,7 +3,9 @@
         <a-layout-header>
             <PlayHeader />
         </a-layout-header>
-        <a-layout-content>Content</a-layout-content>
+        <a-layout-content>
+            <PlayContent />
+        </a-layout-content>
         <a-layout-footer>
             <PlayFooter />
         </a-layout-footer>
@@ -13,6 +15,7 @@
 <script lang="ts" setup name="PlayLayout">
 import PlayHeader from '@renderer/views/PlayHeader/index.vue'
 import PlayFooter from '@renderer/views/PlayFooter/index.vue'
+import PlayContent from '@renderer/views/PlayCentent/index.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -23,7 +26,7 @@ import PlayFooter from '@renderer/views/PlayFooter/index.vue'
 }
 
 .playLayout :deep(.arco-layout-header) {
-    height: 70px;
+    height: 60px;
     line-height: 70px;
     -webkit-app-region: drag;
 }

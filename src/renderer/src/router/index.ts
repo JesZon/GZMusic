@@ -12,7 +12,7 @@ import PlayLayout from '@renderer/layout/PlayLayout/index.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/playLayout'
+    redirect: '/mainLayout'
   },
   {
     path: '/signUpLayout',

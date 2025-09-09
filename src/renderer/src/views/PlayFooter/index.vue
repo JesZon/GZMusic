@@ -82,12 +82,20 @@
                         </svg>
 
                         <!-- 开始/暂停 -->
-                        <div class="stop" @click="playMusic">
+                        <div v-if="isPlaying" class="stop-open" @click="stopMusic">
                             <svg t="1756826815742" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="2721" width="20" height="20">
                                 <path
                                     d="M432 176v672c0 26.5-21.5 48-48 48H224c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48h160c26.5 0 48 21.5 48 48zM848 176v672c0 26.5-21.5 48-48 48H640c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48h160c26.5 0 48 21.5 48 48z"
                                     p-id="2722" fill="#000000"></path>
+                            </svg>
+                        </div>
+                        <div v-if="!isPlaying" class="stop-open" @click="playMusic">
+                            <svg t="1757426452119" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="3139" width="22" height="22">
+                                <path
+                                    d="M732.502883 465.602819c-107.883492-82.3454-215.772403-164.681769-323.652282-247.014525-38.414608-29.327534-93.780555-1.929039-93.780555 46.396277v494.029051c0 48.325316 55.365948 75.725617 93.780555 46.398084 107.87988-82.332757 215.76879-164.669126 323.652282-247.014525 30.61356-23.357989 30.61356-69.436372 0-92.794362z"
+                                    fill="#231815" p-id="3140"></path>
                             </svg>
                         </div>
 
@@ -170,11 +178,12 @@
 </template>
 
 <script lang="ts" setup name="PlayFooter">
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import { ref, onMounted } from 'vue';
 import { ImagePath } from '@renderer/utils/ImagePath';
 
 const sound = ref<Howl | null>(null);
+const isPlaying = ref(false);
 
 onMounted(() => {
     sound.value = new Howl({
@@ -182,32 +191,35 @@ onMounted(() => {
     });
 })
 
-function playMusic() {
+const playMusic = () => {
     sound.value.play();
+    isPlaying.value = true;
 }
+
+const stopMusic = () => {
+    sound.value.pause();
+    isPlaying.value = false;
+}
+
 </script>
 
 <style lang="scss" scoped>
 .play-footer {
     height: 100%;
-    // box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .grid-play-footer {
     height: inherit;
-    // background-color: green;
 }
 
 .grid-1 {
     height: inherit;
-    // background-color: red;
     display: flex;
     justify-content: start;
     align-items: center;
     height: var(--gz-element-footer-height);
 
     .music-info-control {
-        // background-color: yellow;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -219,7 +231,6 @@ function playMusic() {
             padding: 20px;
             justify-content: center;
             align-items: center;
-            // background-color: aquamarine;
 
             svg {
                 cursor: pointer;
@@ -293,7 +304,7 @@ function playMusic() {
                 margin-right: 13px;
             }
 
-            .stop {
+            .stop-open {
                 user-select: none;
                 cursor: pointer;
                 width: 50px;

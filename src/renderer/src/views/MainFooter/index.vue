@@ -68,7 +68,7 @@
                                 fill="#9CA3AF" p-id="4487"></path>
                         </svg>
 
-                        <div class="stop">
+                        <div v-if="isPlaying" class="stop-open" @click="stopMusic">
                             <svg t="1756826815742" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="2721" width="20" height="20">
                                 <path
@@ -76,6 +76,15 @@
                                     p-id="2722" fill="#000000"></path>
                             </svg>
                         </div>
+                        <div v-if="!isPlaying" class="stop-open" @click="playMusic">
+                            <svg t="1757426452119" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="3139" width="22" height="22">
+                                <path
+                                    d="M732.502883 465.602819c-107.883492-82.3454-215.772403-164.681769-323.652282-247.014525-38.414608-29.327534-93.780555-1.929039-93.780555 46.396277v494.029051c0 48.325316 55.365948 75.725617 93.780555 46.398084 107.87988-82.332757 215.76879-164.669126 323.652282-247.014525 30.61356-23.357989 30.61356-69.436372 0-92.794362z"
+                                    fill="#231815" p-id="3140"></path>
+                            </svg>
+                        </div>
+
 
                         <svg t="1756826230749" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="2304" width="20" height="20">
@@ -99,7 +108,7 @@
                     <div class="play-progress">
                         <!-- 进度时间 -->
                         <div class="time time-current">
-                            <span>00:00</span>
+                            <span>{{ timeCurrentRef }}</span>
                         </div>
 
                         <!-- 进度条 -->
@@ -113,7 +122,7 @@
 
                         <!-- 总时间 -->
                         <div class="time time-total">
-                            <span>00:00</span>
+                            <span>{{ timeTotalRef }}</span>
                         </div>
                     </div>
                 </a-space>
@@ -144,6 +153,7 @@
 
 <script lang="ts" setup name="MainFooter">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { Howl } from 'howler';
 
 // 图片导入
 import { ImagePath } from '@renderer/utils/ImagePath'
@@ -151,9 +161,10 @@ import { ImagePath } from '@renderer/utils/ImagePath'
 /* ====================================================================================================================== */
 // 进度条相关状态
 const currentTime = ref(0) // 当前播放时间（秒）
-const totalTime = ref(180) // 总时长（秒）
+const totalTime = ref(0) // 总时长（秒）
 const isDragging = ref(false) // 是否正在拖拽
 const animationId = ref<number | null>(null)
+const progressUpdateTimer = ref<ReturnType<typeof setInterval> | null>(null)
 
 // DOM引用
 const sliderRef = ref<HTMLElement | null>(null)
@@ -161,6 +172,10 @@ const sliderPlayedRef = ref<HTMLElement | null>(null)
 const sliderPositionRef = ref<HTMLElement | null>(null)
 const timeCurrentRef = ref<HTMLElement | null>(null)
 const timeTotalRef = ref<HTMLElement | null>(null)
+
+// 播放控件
+const sound = ref<Howl | null>(null);
+const isPlaying = ref(false);
 
 // 格式化时间显示
 const formatTime = (seconds: number): string => {
@@ -210,7 +225,14 @@ const calculateProgress = (event: MouseEvent): number => {
 
 // 更新播放进度
 const updateProgress = (progress: number) => {
-    currentTime.value = progress * totalTime.value
+    const newTime = progress * totalTime.value
+    currentTime.value = newTime
+    
+    // 如果音频已加载，跳转到指定位置
+    if (sound.value && sound.value.state() === 'loaded') {
+        sound.value.seek(newTime)
+    }
+    
     updateProgressDisplay()
 }
 
@@ -282,25 +304,98 @@ onMounted(() => {
     // 初始化显示
     updateProgressDisplay()
 
-    // 模拟播放进度更新（实际项目中应该与音频播放器同步）
-    const updateTimer = setInterval(() => {
-        if (!isDragging.value && currentTime.value < totalTime.value) {
-            currentTime.value += 0.1
-            updateProgressDisplay()
-        }
-    }, 100)
-
     // 保存定时器引用以便清理
     onUnmounted(() => {
-        clearInterval(updateTimer)
+        stopProgressUpdate()
         if (animationId.value) {
             cancelAnimationFrame(animationId.value)
         }
         document.removeEventListener('mousemove', handleMouseMove)
         document.removeEventListener('mouseup', handleMouseUp)
+        
+        // 清理音频资源
+        if (sound.value) {
+            sound.value.unload()
+        }
     })
 })
 /* ====================================================================================================================== */
+
+// 实时更新播放进度
+const startProgressUpdate = () => {
+    if (progressUpdateTimer.value) {
+        clearInterval(progressUpdateTimer.value)
+    }
+    
+    progressUpdateTimer.value = setInterval(() => {
+        if (sound.value && isPlaying.value && !isDragging.value) {
+            const seek = sound.value.seek() || 0
+            currentTime.value = typeof seek === 'number' ? seek : 0
+            updateProgressDisplay()
+            
+            // 检查是否播放结束
+            if (currentTime.value >= totalTime.value && totalTime.value > 0) {
+                stopMusic()
+            }
+        }
+    }, 100)
+}
+
+// 停止进度更新
+const stopProgressUpdate = () => {
+    if (progressUpdateTimer.value) {
+        clearInterval(progressUpdateTimer.value)
+        progressUpdateTimer.value = null
+    }
+}
+
+onMounted(() => {
+    sound.value = new Howl({
+        src: [ImagePath.musicFile.zhiwo],
+        onload: function () {
+            // 获取音频时长并更新总时长
+            const duration = sound.value?.duration() || 0
+            totalTime.value = duration
+            console.log('音频时长：' + duration + ' 秒')
+            updateProgressDisplay()
+        },
+        onplay: function () {
+            startProgressUpdate()
+        },
+        onpause: function () {
+            stopProgressUpdate()
+        },
+        onstop: function () {
+            stopProgressUpdate()
+            currentTime.value = 0
+            updateProgressDisplay()
+        },
+        onend: function () {
+            stopProgressUpdate()
+            isPlaying.value = false
+            currentTime.value = 0
+            updateProgressDisplay()
+        }
+    })
+})
+
+const playMusic = () => {
+    if (sound.value) {
+        sound.value.play()
+        isPlaying.value = true
+        startProgressUpdate()
+    }
+}
+
+const stopMusic = () => {
+    if (sound.value) {
+        sound.value.pause()
+        isPlaying.value = false
+        stopProgressUpdate()
+    }
+}
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -393,7 +488,7 @@ onMounted(() => {
                 margin-right: 13px;
             }
 
-            .stop {
+            .stop-open {
                 user-select: none;
                 cursor: pointer;
                 width: 50px;
