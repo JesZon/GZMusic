@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <!-- 矩形作为参考 -->
+  <rect x="75"
+        y="75"
+        width="50"
+        height="50"
+        fill="none"
+        rx="10"
+        ry="10"
+        stroke="#70706c"
+        stroke-width="10" />
+  
+  <!-- 第一个path -->
+  <path d="M119 42.5 L157 42.5 M157 42.5 L157 79.5"
+        fill="none"
+        stroke="#70706c"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="10" />
+  <path d="M81 157.5 L43 157.5 M43 157.5 L43 120.5"
+        fill="none"
+        stroke="#70706c"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="10" />
+</svg>
+    

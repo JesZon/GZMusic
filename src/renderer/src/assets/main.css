@@ -1,9 +1,1 @@
 @import './base.css';
-
-/* 隐藏滚动条 */
-body::-webkit-scrollbar {
-    display: none;
-}
-body {
-    overflow: hidden;
-}

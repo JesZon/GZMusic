@@ -1,5 +1,5 @@
 import mitt from 'mitt'
 
-const emitter = mitt()
+const emitter: any = mitt();
 
 export default emitter;

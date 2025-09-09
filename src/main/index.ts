@@ -3,18 +3,21 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+let mainWindow: BrowserWindow
+
 function createWindow(): void {
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 750,
+  mainWindow = new BrowserWindow({
+    width: 1240,
+    height: 810,
+    minWidth: 1240,
+    minHeight: 810,
     show: false,
+    frame: false, // 窗口控制栏隐藏
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      nodeIntegration: true,
-      contextIsolation: false
+      sandbox: false
     }
   })
 
@@ -40,10 +43,60 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC注册
-  ipcMain.on('ping', () => console.log('pong'))
+  // IPC ====================================================
+  // 1.最小化
+  ipcMain.handle('window-minimize', () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.minimize()
+      return true
+    }
+    return false
+  })
+
+  // 2.最大化/还原
+  ipcMain.handle('window-maximize', () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize()
+        return false // 返回false表示已还原
+      } else {
+        mainWindow.maximize()
+        return true // 返回true表示已最大化
+      }
+    }
+    return false
+  })
+
+  // 获取窗口最大化状态
+  ipcMain.handle('window-is-maximized', () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      return mainWindow.isMaximized()
+    }
+    return false
+  })
+
+  // 3.关闭程序
+  ipcMain.handle('window-close', () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.close()
+      return true
+    }
+    return false
+  })
+
+  // 4.页面全屏
+  ipcMain.handle('window-fullscreen', () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.setFullScreen(!mainWindow.isFullScreen())
+      return true
+    }
+    return false
+  })
+
+  // IPC ====================================================
 
   createWindow()
+
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
@@ -54,3 +107,4 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
