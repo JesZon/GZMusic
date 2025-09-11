@@ -29,15 +29,8 @@
                 <MainHeader />
             </a-layout-header>
             <a-layout-content style="color: black;padding: 5px 0 10px 10px;">
-                <!-- 标题 -->
-                <a-scrollbar class="custom-scrollbar" style="height: 100%;
-                    overflow: auto;
-                    width: 100%;
-                    padding-right: 10px;
-                    /* background-color: yellow; */
-                    max-height: calc(100vh - 75px - var(--gz-element-footer-height));">
-                    <MainPage />
-                </a-scrollbar>
+                <!-- <MainPage /> -->
+                <InformationPage />
             </a-layout-content>
             <a-layout-footer style="color: black;">
                 <MainFooter />
@@ -60,6 +53,7 @@ import MainHeader from '@renderer/views/MainHeader/index.vue' // 主页头部组
 import MainFooter from "@renderer/views/MainFooter/index.vue" // 主页面底部控件
 
 import MainPage from '@renderer/views/ContentPage/main-page.vue' // 首页 ----- 暂时
+import InformationPage from '@renderer/components/InformationPage/index.vue' // 信息页面
 
 // 全局通讯
 import emitter from "@renderer/utils/emitter";
@@ -176,7 +170,8 @@ const setStatusBar = () => {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    padding: 12px 8px;
+    padding: 15px 8px;
+    margin-top: 10px;
     max-width: 200px;
     width: 100%;
 

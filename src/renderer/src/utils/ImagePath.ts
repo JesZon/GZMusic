@@ -12,6 +12,7 @@ export const ImagePath = {
     suspensionIcon: new URL('@renderer/assets/images/suspension.svg', import.meta.url).href, // 悬浮窗图标
     zhiwoIcon: new URL("@renderer/assets/images/zhiwo.jpg", import.meta.url).href, // 测试图片-知我
     screenIcon: new URL('@renderer/assets/images/screen.svg', import.meta.url).href, // 屏幕图标
+    LoveIcon: new URL('@renderer/assets/images/love.svg', import.meta.url).href, // 喜欢图标
     // 音乐类型分类
     musicType: {
         1: new URL('@renderer/assets/images/music-type/1.jpg', import.meta.url).href,

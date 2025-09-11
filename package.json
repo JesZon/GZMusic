@@ -28,6 +28,7 @@
     "electron-updater": "^6.3.9",
     "howler": "^2.2.4",
     "mitt": "^3.0.1",
+    "mockjs": "^1.1.0",
     "sass": "^1.91.0",
     "vue-router": "^4.5.1"
   },

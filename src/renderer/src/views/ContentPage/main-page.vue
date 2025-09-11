@@ -1,27 +1,33 @@
 <template>
-    <div class="MainPage">
-        <a-space :size="4" direction="vertical" class="space-vertical" fill>
-            <!-- 标题 -->
-            <div class="main-title">
-                <span>下午好，打个盹儿吧！</span>
-            </div>
+    <a-scrollbar class="custom-scrollbar" style="height: 100%;
+                    overflow: auto;
+                    width: 100%;
+                    padding-right: 10px;
+                    max-height: calc(100vh - 67px - var(--gz-element-footer-height));">
+        <div class="MainPage">
+            <a-space :size="4" direction="vertical" class="space-vertical" fill>
+                <!-- 标题 -->
+                <div class="main-title">
+                    <span>下午好，打个盹儿吧！</span>
+                </div>
 
-            <!-- 歌单分类 -->
-            <MusicClassify />
+                <!-- 歌单分类 -->
+                <MusicClassify />
 
-            <!-- 今日推荐 -->
-            <TodayRecommendation />
+                <!-- 今日推荐 -->
+                <TodayRecommendation />
 
-            <!-- 歌单榜 -->
-            <SongChart />
+                <!-- 歌单榜 -->
+                <SongChart />
 
-            <!-- 为您打造 -->
-            <CreatedYou />
+                <!-- 为您打造 -->
+                <CreatedYou />
 
-            <!-- 艺术家推荐 -->
-            <ArtistList />
-        </a-space>
-    </div>
+                <!-- 艺术家推荐 -->
+                <ArtistList />
+            </a-space>
+        </div>
+    </a-scrollbar>
 </template>
 
 <script lang="ts" setup name="MainPage">

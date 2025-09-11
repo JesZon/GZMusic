@@ -52,10 +52,10 @@
 .UserInfo {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     height: 100%;
     width: 100%;
-    margin-left: 3rem;
+    margin-right: 1rem;
 
     .user-info-container {
         display: flex;

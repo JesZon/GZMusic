@@ -5,7 +5,7 @@
                 <PlayImage />
             </div>
             <div class="play-view-lyrics">
-                
+                <playLyrics />
             </div>
         </div>
     </div>
@@ -13,6 +13,7 @@
 
 <script lang="ts" setup name="PlayCentent">
 import PlayImage from '@renderer/views/PlayCentent/play-image.vue';
+import playLyrics from '@renderer/views/PlayCentent/play-lyrics.vue';
 </script>
 
 <style lang="scss" scoped>

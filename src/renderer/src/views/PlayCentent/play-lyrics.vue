@@ -1,6 +1,6 @@
 <template>
     <div class="play-lyrics">
-
+        歌词显示
     </div>
 </template>
 
