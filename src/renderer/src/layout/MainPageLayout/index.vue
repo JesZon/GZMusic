@@ -29,8 +29,9 @@
                 <MainHeader />
             </a-layout-header>
             <a-layout-content style="color: black;padding: 5px 0 10px 10px;">
+                <MusicSearch />
                 <!-- <MainPage /> -->
-                <InformationPage />
+                <!-- <InformationPage /> -->
             </a-layout-content>
             <a-layout-footer style="color: black;">
                 <MainFooter />
@@ -52,8 +53,9 @@ import NavFooter from '@renderer/views/NavFooter/index.vue' // 底部导航组�
 import MainHeader from '@renderer/views/MainHeader/index.vue' // 主页头部组件
 import MainFooter from "@renderer/views/MainFooter/index.vue" // 主页面底部控件
 
-// import MainPage from '@renderer/views/ContentPage/main-page.vue' // 首页 ----- 暂时
-import InformationPage from '@renderer/components/InformationPage/index.vue' // 信息页面
+// import MainPage from '@renderer/views/ContentPage/main-page.vue' // 首页
+// import InformationPage from '@renderer/components/InformationPage/index.vue' // 信息页面
+import MusicSearch from '@renderer/components/MusicSearch/index.vue' // 搜索页面
 
 // 全局通讯
 import emitter from "@renderer/utils/emitter";
