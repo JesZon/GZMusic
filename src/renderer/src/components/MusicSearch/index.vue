@@ -109,6 +109,9 @@ import { SearchStatus, MusicItem } from '@renderer/store/modules/musicSearch'
 // 路由导航
 import { useRoute, useRouter } from 'vue-router'
 
+// 全局通讯
+import emitter from "@renderer/utils/emitter";
+
 const router = useRouter()  // 执行路由操作
 const route = useRoute()  // 访问当前路由信息
 
@@ -137,11 +140,14 @@ const handleMenuClick = (index: number) => {
     console.log('切换到:', menuItems.value[index].name)
 }
 
+import { getMusicUrl } from '@renderer/api/MusicSearch'
+
 // 播放音乐处理函数
-const handlePlayMusic = (record: MusicItem) => {
+const handlePlayMusic = async (record: MusicItem) => {
     console.log('播放音乐:', record.name, '- 歌手:', record.artist)
-    // TODO: 这里将来实现音乐播放控制功能
-    
+    // 发送全局事件，通知播放音乐
+    const musicUrl = await getMusicUrl(record.id);
+    emitter.emit('playMusic', musicUrl.data.replace('http://m804.music.126.net', '/music-resource'))
 }
 
 // 表格列配置

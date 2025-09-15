@@ -24,7 +24,7 @@
                         p-id="2722" fill="#000000"></path>
                 </svg>
             </div>
-            <div v-if="!isPlaying" class="stop-open" @click="playMusic">
+            <div v-if="!isPlaying" class="stop-open" @click="playMusic(ImagePath.musicFile.zhiwo)">
                 <svg t="1757426452119" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="3139" width="22" height="22">
                     <path
@@ -114,34 +114,35 @@ const sound = ref<Howl | null>(null);
 const isPlaying = ref(false);
 
 onMounted(() => {
-    sound.value = new Howl({
-        src: [ImagePath.musicFile.zhiwo],
-        onload: function () {
-            // 获取音频时长并更新总时长
-            const duration = sound.value?.duration() || 0
-            totalTime.value = duration
-            console.log('音频时长：' + duration + ' 秒')
-            updateProgressDisplay()
-        },
-        onplay: function () {
-            startProgressUpdate()
-        },
-        onpause: function () {
-            stopProgressUpdate()
-        },
-        onstop: function () {
-            stopProgressUpdate()
-            currentTime.value = 0
-            updateProgressDisplay()
-        },
-        onend: function () {
-            stopProgressUpdate()
-            isPlaying.value = false
-            currentTime.value = 0
-            updateProgressDisplay()
-        }
-    });
+    // sound.value = new Howl({
+    //     src: [ImagePath.musicFile.zhiwo],
+    //     onload: function () {
+    //         // 获取音频时长并更新总时长
+    //         const duration = sound.value?.duration() || 0
+    //         totalTime.value = duration
+    //         console.log('音频时长：' + duration + ' 秒')
+    //         updateProgressDisplay()
+    //     },
+    //     onplay: function () {
+    //         startProgressUpdate()
+    //     },
+    //     onpause: function () {
+    //         stopProgressUpdate()
+    //     },
+    //     onstop: function () {
+    //         stopProgressUpdate()
+    //         currentTime.value = 0
+    //         updateProgressDisplay()
+    //     },
+    //     onend: function () {
+    //         stopProgressUpdate()
+    //         isPlaying.value = false
+    //         currentTime.value = 0
+    //         updateProgressDisplay()
+    //     }
+    // });
     // 获取DOM引用
+
     const playProgressEl = document.querySelector('.play-progress')
     if (playProgressEl) {
         sliderRef.value = playProgressEl.querySelector('.slider') as HTMLElement
@@ -262,7 +263,37 @@ const formatTime = (seconds: number): string => {
 }
 
 // 播放音乐，结束时清理
-const playMusic = () => {
+const playMusic = (music_src: string) => {
+    console.log('播放音乐：' + music_src)
+
+    sound.value = new Howl({
+        src: [music_src],
+        onload: function () {
+            // 获取音频时长并更新总时长
+            const duration = sound.value?.duration() || 0
+            totalTime.value = duration
+            console.log('音频时长：' + duration + ' 秒')
+            updateProgressDisplay()
+        },
+        onplay: function () {
+            startProgressUpdate()
+        },
+        onpause: function () {
+            stopProgressUpdate()
+        },
+        onstop: function () {
+            stopProgressUpdate()
+            currentTime.value = 0
+            updateProgressDisplay()
+        },
+        onend: function () {
+            stopProgressUpdate()
+            isPlaying.value = false
+            currentTime.value = 0
+            updateProgressDisplay()
+        }
+    });
+
     if (sound.value) {
         sound.value.play()
         isPlaying.value = true

@@ -55,13 +55,26 @@ export interface MusicSearchResponse {
 export const searchMusic = async (keyword: string): Promise<ApiResponse<MusicSearchItem[]>> => {
   const encodedKeyword = encodeURIComponent(keyword.trim())
   const url = `${BASE_URL}/search/${encodedKeyword}`
-  
+
   const response = await axios.get<ApiResponse<MusicSearchItem[]>>(url)
+  return response.data
+}
+
+
+/**
+ * 获取音乐播放地址
+ * @param music_id 歌曲id
+ * @returns Promise<ApiResponse<string>>
+ */
+export const getMusicUrl = async (music_id: string): Promise<ApiResponse<string>> => {
+  const url = `${BASE_URL}/url?musicId=${music_id}`
+  const response = await axios.get<ApiResponse<string>>(url)
   return response.data
 }
 
 
 // 默认导出
 export default {
-  searchMusic
+  searchMusic,
+  getMusicUrl
 }

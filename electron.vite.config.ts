@@ -24,6 +24,11 @@ export default defineConfig({
           target: 'http://p1.music.126.net',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/music-img/, '')
+        },
+        '/music-resource': {
+          target: 'http://m804.music.126.net',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/music-resource/, '')
         }
       }
     },
