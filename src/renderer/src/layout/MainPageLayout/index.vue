@@ -25,13 +25,11 @@
         </a-layout-sider>
 
         <a-layout>
-            <a-layout-header @contextmenu.prevent>
+            <a-layout-header style="-webkit-app-region: drag;">
                 <MainHeader />
             </a-layout-header>
             <a-layout-content style="color: black;padding: 5px 0 10px 10px;">
-                <MusicSearch />
-                <!-- <MainPage /> -->
-                <!-- <InformationPage /> -->
+                <router-view />
             </a-layout-content>
             <a-layout-footer style="color: black;">
                 <MainFooter />
@@ -53,9 +51,11 @@ import NavFooter from '@renderer/views/NavFooter/index.vue' // 底部导航组�
 import MainHeader from '@renderer/views/MainHeader/index.vue' // 主页头部组件
 import MainFooter from "@renderer/views/MainFooter/index.vue" // 主页面底部控件
 
-// import MainPage from '@renderer/views/ContentPage/main-page.vue' // 首页
-// import InformationPage from '@renderer/components/InformationPage/index.vue' // 信息页面
-import MusicSearch from '@renderer/components/MusicSearch/index.vue' // 搜索页面
+// 路由导航
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()  // 执行路由操作
+const route = useRoute()  // 访问当前路由信息
 
 // 全局通讯
 import emitter from "@renderer/utils/emitter";
@@ -64,26 +64,105 @@ const statusBar = ref<boolean>(false)
 
 onMounted(() => {
     emitter.on('setStatusBar', setStatusBar)
+    emitter.on('navigateTo', navigateTo)
 })
 
 onUnmounted(() => {
-    emitter.all.clear()
+    emitter.off('setStatusBar', setStatusBar)
+    emitter.off('navigateTo', navigateTo)
 })
+
+
+// 定义页面传参类型
+interface NavigateToSingleParam {
+    // 跳转类型
+    toType: {
+        status: 'path' | 'name' | 'back' | 'forward',
+        content: string
+    };
+    // 传入的参数
+    arguments: {
+        status: 'params' | 'query',
+        content: any
+    }
+}
+
+// 页面跳转
+const navigateTo = (params: NavigateToSingleParam) => {
+    // console.log("跳转信息：", params)
+
+    const { toType, arguments: args } = params
+
+    switch (toType.status) {
+        case 'path':
+            // 通过路径跳转
+            if (args.status === 'params') {
+                console.warn('路由跳转参数类型错误，请使用query类型')
+            } else if(args.status === 'query') {
+                router.push({
+                    path: toType.content,
+                    query: args.content
+                })
+            } else {
+                router.push(toType.content)
+            }
+            break
+
+        case 'name':
+            // 通过路由名称跳转
+            if (args.status === 'params') {
+                router.push({
+                    name: toType.content,
+                    params: args.content
+                })
+            } else if (args.status === 'query') {
+                router.push({
+                    name: toType.content,
+                    query: args.content
+                })
+            } else {
+                router.push({ name: toType.content })
+            }
+            break
+
+        case 'back':
+            // 后退
+            const backSteps = parseInt(toType.content) || 1
+            router.go(-backSteps)
+            break
+
+        case 'forward':
+            // 前进
+            const forwardSteps = parseInt(toType.content) || 1
+            router.go(forwardSteps)
+            break
+
+        default:
+            console.warn('未知的跳转类型:', toType.status)
+    }
+}
+
+
 // 系统功能数据
 const systemFeatures = reactive([
     {
         text: '首页',
         iconPath: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z',
-        active: true
+        active: true,
+        path: ''
     },
     {
         text: '搜索',
-        iconPath: 'M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
+        iconPath: 'M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',
+        active: false,
+        path: ''
     },
     {
         text: '音乐上传',
         iconPath: 'M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z',
-        iconPath2: 'M12,11L16,15H13V19H11V15H8L12,11Z'
+        iconPath2: 'M12,11L16,15H13V19H11V15H8L12,11Z',
+        active: false,
+        path: ''
     }
 ])
 
@@ -91,26 +170,52 @@ const systemFeatures = reactive([
 const musicFeatures = reactive([
     {
         text: '喜欢',
-        iconPath: 'M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z'
+        iconPath: 'M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z',
+        active: false,
+        path: 'InformationPage'
     },
     {
         text: '本地下载',
-        iconPath: 'M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z'
+        iconPath: 'M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z',
+        active: false,
+        path: ''
     },
     {
         text: '最近播放',
-        iconPath: 'M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z'
+        iconPath: 'M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z',
+        active: false,
+        path: ''
     }
 ])
 
 // 处理系统功能点击
-const handleSystemClick = (item: any, index: number) => {
-    console.log('系统功能点击:', item.text, index)
+const handleSystemClick = (item: any, sys_index: number) => {
+    console.log('系统功能点击:', item.text, sys_index)
+    // 设置 active 状态，之前在改为false，现在改为true, 还有musicFeatures的active状态也要改
+    systemFeatures.forEach((item, index) => {
+        item.active = false
+        if (index === sys_index) {
+            item.active = true
+        }
+    })
+    musicFeatures.forEach((item) => {
+        item.active = false
+    })
 }
 
 // 处理音乐功能点击
-const handleMusicClick = (item: any, index: number) => {
-    console.log('音乐功能点击:', item.text, index)
+const handleMusicClick = (item: any, music_index: number) => {
+    console.log('音乐功能点击:', item.text, music_index)
+    // 设置 active 状态，之前在改为false，现在改为true, 还有systemFeatures的active状态也要改
+    musicFeatures.forEach((item, index) => {
+        item.active = false
+        if (index === music_index) {
+            item.active = true
+        }
+    })
+    systemFeatures.forEach((item) => {
+        item.active = false
+    })
 }
 
 // 处理左侧状态栏的收起状态
@@ -129,10 +234,9 @@ const setStatusBar = () => {
 }
 
 .layout-demo :deep(.arco-layout-header) {
-    height: 50px;
-    line-height: 50px;
+    height: 60px;
+    line-height: 60px;
     background: var(--color-bg-3);
-    -webkit-app-region: drag;
 }
 
 .layout-demo :deep(.arco-layout-footer) {

@@ -84,6 +84,9 @@ import { Howl } from 'howler';
 // 音频导入
 import { ImagePath } from '@renderer/utils/ImagePath'
 
+// 全局通讯
+import emitter from "@renderer/utils/emitter";
+
 const props = defineProps({
     playLine: {
         type: String,
@@ -156,6 +159,10 @@ onMounted(() => {
 
     // 初始化显示
     updateProgressDisplay()
+
+    // 注册全局事件 =========================
+    emitter.on("playMusic", playMusic)
+    emitter.on("stopMusic", stopMusic)
 })
 
 // 保存定时器引用以便清理
@@ -171,6 +178,10 @@ onUnmounted(() => {
     if (sound.value) {
         sound.value.unload()
     }
+
+    // 清理全局事件 =========================
+    emitter.off("playMusic", playMusic)
+    emitter.off("stopMusic", stopMusic)
 })
 
 // 点击进度条事件

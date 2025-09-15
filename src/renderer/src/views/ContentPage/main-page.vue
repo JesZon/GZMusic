@@ -3,7 +3,7 @@
                     overflow: auto;
                     width: 100%;
                     padding-right: 10px;
-                    max-height: calc(100vh - 67px - var(--gz-element-footer-height));">
+                    max-height: calc(100vh - 77px - var(--gz-element-footer-height));">
         <div class="MainPage">
             <a-space :size="4" direction="vertical" class="space-vertical" fill>
                 <!-- 标题 -->

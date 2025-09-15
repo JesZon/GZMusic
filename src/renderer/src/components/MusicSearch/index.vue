@@ -48,13 +48,72 @@
             </div>
         </div>
 
+        <!-- <div class="music-list-two">
+            <MusicTable />
+        </div> -->
+
         <div class="music-list">
+            <a-table :columns="columns" :loading="musicSearchStore.isLoading" :data="musicSearchStore.formatSearchData" :pagination="false"
+                :scroll="{ y: '100%' }" row-key="id" :bordered="false" size="medium">
+                <!-- 歌手/歌名列自定义渲染 -->
+                <template #songInfo="{ record }">
+                    <div class="song-info" @dblclick="handlePlayMusic(record)">
+                        <div class="song-cover-container">
+                            <img :src="record.cover" alt="专辑封面" class="song-cover" />
+                            <div class="play-overlay" @click.stop="handlePlayMusic(record)">
+                                <svg class="play-icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M780.8 475.733333L285.866667 168.533333c-27.733333-17.066667-64 4.266667-64 36.266667v614.4c0 32 36.266667 53.333333 64 36.266667l492.8-307.2c29.866667-14.933333 29.866667-57.6 2.133333-72.533334z"
+                                        fill="#fff" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="song-details">
+                            <div class="song-name">{{ record.name }}</div>
+                            <div class="artist-name">{{ record.artist }}</div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- <template #empty>
+                    空状态
+                </template> -->
+
+                <template #actions="{ record }" style="height: 100%;">
+                    <div class="action-buttons">
+                        <a-button type="text" size="small" class="action-btn">
+                            <icon-heart class="icon" />
+                        </a-button>
+                        <a-button type="text" size="small" class="action-btn">
+                            <icon-check-circle class="icon" />
+                        </a-button>
+                        <a-button type="text" size="small" class="action-btn">
+                            <icon-more class="icon" />
+                        </a-button>
+                    </div>
+                </template>
+            </a-table>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup name="MusicSearch">
-import { ref } from 'vue'
+import { onBeforeUpdate, onMounted, ref } from 'vue'
+import { IconHeart, IconCheckCircle, IconMore } from '@arco-design/web-vue/es/icon';
+
+// 引入状态管理库
+import { useMusicSearchStore } from '@renderer/store'
+import { SearchStatus, MusicItem } from '@renderer/store/modules/musicSearch'
+
+// 路由导航
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()  // 执行路由操作
+const route = useRoute()  // 访问当前路由信息
+
+// 搜索状态库
+const musicSearchStore = useMusicSearchStore()
 
 // 音乐搜索界面
 interface MenuItem {
@@ -78,26 +137,77 @@ const handleMenuClick = (index: number) => {
     console.log('切换到:', menuItems.value[index].name)
 }
 
+// 播放音乐处理函数
+const handlePlayMusic = (record: MusicItem) => {
+    console.log('播放音乐:', record.name, '- 歌手:', record.artist)
+    // TODO: 这里将来实现音乐播放控制功能
+    
+}
+
+// 表格列配置
+const columns = [
+    {
+        title: '序号',
+        dataIndex: 'index',
+        width: 60,
+        render: ({ rowIndex }: { rowIndex: number }) => rowIndex + 1
+    },
+    {
+        title: '歌手/歌名',
+        dataIndex: 'songInfo',
+        slotName: 'songInfo',
+        width: 300
+    },
+    {
+        title: '',
+        dataIndex: 'actions',
+        slotName: 'actions',
+        width: 120,
+        align: 'center'
+    },
+    {
+        title: '专辑',
+        dataIndex: 'album',
+        width: 200,
+        ellipsis: true
+    },
+    {
+        title: '时长',
+        dataIndex: 'duration',
+        width: 80,
+        align: 'center'
+    }
+]
 
 // 列表数据 ================================================================
+
+onMounted(() => {
+    // 获取路由参数数据
+    console.log("搜索歌曲：", route.query.search)
+
+    // 发送搜索请求
+    musicSearchStore.searchStatus = SearchStatus.LOADING
+    musicSearchStore.search(route.query.search as string);
+})
+
+// onBeforeUpdate(() => {
+//     console.log("路由变化：", route.query.search)
+//     if (route.query.search !== musicSearchStore.lastSearch) {
+//         musicSearchStore.searchStatus = SearchStatus.LOADING
+//         musicSearchStore.search(route.query.search as string);
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>
 .music-search {
     width: 100%;
     height: 100%;
-    background-color: #fafafa;
-
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 4fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
 }
 
 .title {
     width: 100%;
-    height: 100%;
+    height: 120px;
     padding: 20px 10px 10px 10px;
     border-bottom: 1px solid #e0e0e0;
 
@@ -218,7 +328,156 @@ const handleMenuClick = (index: number) => {
 
 .music-list {
     width: 100%;
-    height: 100%;
-    background-color: red;
+    height: calc(100vh - 280px);
+    overflow: hidden;
+
+    :deep(.arco-table) {
+        height: 100%;
+
+        .arco-table-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .arco-table-header {
+            flex-shrink: 0;
+        }
+
+        .arco-table-body {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        // 当数据为空时，隐藏滚动条并让空状态完全展示
+        .arco-table-body:has(.arco-empty) {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        // 空状态样式优化
+        .arco-empty {
+            padding: 60px 20px;
+            height: auto;
+            user-select: none;
+        }
+
+        .arco-table-th {
+            background-color: #fafafa;
+            border-bottom: 1px solid #e5e6eb;
+            font-weight: 500;
+            color: #1d2129;
+        }
+
+        .arco-table-td {
+            border-bottom: 1px solid #f2f3f5;
+            padding: 12px 16px;
+        }
+
+        .arco-table-tr:hover {
+            background-color: #f7f8fa;
+        }
+    }
+
+    .song-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+
+        .song-cover-container {
+            position: relative;
+            width: 40px;
+            height: 40px;
+
+            .song-cover {
+                width: 100%;
+                height: 100%;
+                border-radius: 4px;
+                object-fit: cover;
+                transition: filter 0.2s ease;
+            }
+
+            .play-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                cursor: pointer;
+
+                .play-icon {
+                    width: 20px;
+                    height: 20px;
+                    fill: #fff;
+                }
+            }
+
+            &:hover {
+                .play-overlay {
+                    opacity: 1;
+                }
+
+                .song-cover {
+                    filter: brightness(0.8);
+                }
+            }
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .song-name {
+                font-size: 14px;
+                font-weight: 500;
+                color: #1d2129;
+                line-height: 1.2;
+            }
+
+            .artist-name {
+                font-size: 12px;
+                color: #86909c;
+                line-height: 1.2;
+            }
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .action-btn {
+            padding: 3px;
+            border: none;
+            background: transparent;
+
+            .icon {
+                width: 21px;
+                height: 21px;
+            }
+
+            &:hover {
+                background-color: #f2f3f5;
+                border-radius: 4px;
+
+                .icon path {
+                    fill: #1976d2;
+                }
+            }
+        }
+    }
 }
 </style>
