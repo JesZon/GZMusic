@@ -53,8 +53,8 @@
         </div> -->
 
         <div class="music-list">
-            <a-table :columns="columns" :loading="musicSearchStore.isLoading" :data="musicSearchStore.formatSearchData" :pagination="false"
-                :scroll="{ y: '100%' }" row-key="id" :bordered="false" size="medium">
+            <a-table :columns="columns" :loading="musicSearchStore.isLoading" :data="musicSearchStore.formatSearchData"
+                :pagination="false" :scroll="{ y: '100%' }" row-key="id" :bordered="false" size="medium">
                 <!-- 歌手/歌名列自定义渲染 -->
                 <template #songInfo="{ record }">
                     <div class="song-info" @dblclick="handlePlayMusic(record)">
@@ -147,7 +147,7 @@ const handlePlayMusic = async (record: MusicItem) => {
     console.log('播放音乐:', record.name, '- 歌手:', record.artist)
     // 发送全局事件，通知播放音乐
     const musicUrl = await getMusicUrl(record.id);
-    emitter.emit('playMusic', musicUrl.data.replace('http://m804.music.126.net', '/music-resource'))
+    emitter.emit('playMusic', musicUrl.data.replace(/http:\/\/m\d+0\d+\.music.126\.net/g, '/music-resource'))
 }
 
 // 表格列配置
