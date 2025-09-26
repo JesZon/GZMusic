@@ -30,6 +30,7 @@
     "mitt": "^3.0.1",
     "mockjs": "^1.1.0",
     "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
     "sass": "^1.91.0",
     "vue-router": "^4.5.1"
   },

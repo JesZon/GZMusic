@@ -103,8 +103,11 @@ import { onBeforeUpdate, onMounted, ref } from 'vue'
 import { IconHeart, IconCheckCircle, IconMore } from '@arco-design/web-vue/es/icon';
 
 // 引入状态管理库
-import { useMusicSearchStore } from '@renderer/store'
-import { SearchStatus, MusicItem } from '@renderer/store/modules/musicSearch'
+import { useMusicSearchStore } from '@renderer/store/modules/musicSearch'
+
+// 引入音乐搜索类型
+import { MusicItem } from '@renderer/store/musicType'
+import { SearchStatus } from "@renderer/store/musicEnum"
 
 // 路由导航
 import { useRoute, useRouter } from 'vue-router'
@@ -118,13 +121,10 @@ const route = useRoute()  // 访问当前路由信息
 // 搜索状态库
 const musicSearchStore = useMusicSearchStore()
 
-// 音乐搜索界面
-interface MenuItem {
+const menuItems = ref<{
     name: string
     value: string
-}
-
-const menuItems = ref<MenuItem[]>([
+}[]>([
     { name: '综合', value: 'all' },
     { name: '单曲', value: 'song' },
     { name: '歌手', value: 'artist' },
@@ -450,12 +450,20 @@ onMounted(() => {
                 font-weight: 500;
                 color: #1d2129;
                 line-height: 1.2;
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .artist-name {
                 font-size: 12px;
                 color: #86909c;
                 line-height: 1.2;
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
     }

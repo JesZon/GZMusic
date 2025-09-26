@@ -1,38 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { searchMusic } from '@renderer/api/MusicSearch'
-import type { MusicSearchItem } from '@renderer/api/MusicSearch'
+import type { MusicSearchItem } from '@renderer/entity/MusicSearch'
 
+// 导入类型、枚举
+import * as musicEnum from "@renderer/store/musicEnum"
+import * as musicType from "@renderer/store/musicType"
 
-// 搜索状态枚举
-export enum SearchStatus {
-    IDLE = 'idle', // 空闲状态
-    LOADING = 'loading', // 加载中状态
-    SUCCESS = 'success', // 成功状态
-    ERROR = 'error' // 错误状态
-}
-
-// 缓存数据类型
-export interface SearchCache {
-    keyword: string
-    data: MusicSearchItem[]
-    timestamp: number
-    expireTime: number
-}
-
-export interface MusicItem {
-    id: string // 音乐ID
-    name: string  // 音乐名称
-    artist: string  // 艺术家名称
-    album: string  // 专辑名称
-    duration: string // 音乐时长
-    cover: string // 封面图片地址
-}
 
 export const useMusicSearchStore = defineStore('musicSearch', () => {
     // ======================== satate ========================
     // 搜索状态
-    const searchStatus = ref<SearchStatus>(SearchStatus.IDLE)
+    const searchStatus = ref<musicEnum.SearchStatus>(musicEnum.SearchStatus.IDLE)
 
     // 搜索结果列表
     const searchResults = ref<MusicSearchItem[]>([])
@@ -48,16 +27,16 @@ export const useMusicSearchStore = defineStore('musicSearch', () => {
 
     // ======================== getter ========================
     // 是否正在加载
-    const isLoading = computed(() => searchStatus.value === SearchStatus.LOADING)
+    const isLoading = computed(() => searchStatus.value === musicEnum.SearchStatus.LOADING)
 
     // 是否有搜索结果
     const hasResults = computed(() => searchResults.value.length > 0)
 
     // 是否有错误
-    const hasError = computed(() => searchStatus.value === SearchStatus.ERROR)
+    const hasError = computed(() => searchStatus.value === musicEnum.SearchStatus.ERROR)
 
     // 格式化搜索结构
-    const formatSearchData = computed((): MusicItem[] => {
+    const formatSearchData = computed((): musicType.MusicItem[] => {
         return searchResults.value.map(item => {
             return {
                 id: item.id,
@@ -74,7 +53,7 @@ export const useMusicSearchStore = defineStore('musicSearch', () => {
     // 搜索音乐
     const search = async (keyword: string) => {
         // 设置状态为加载中
-        searchStatus.value = SearchStatus.LOADING
+        searchStatus.value = musicEnum.SearchStatus.LOADING
         // 设置当前搜索关键词
         currentKeyword.value = keyword
 
@@ -82,12 +61,12 @@ export const useMusicSearchStore = defineStore('musicSearch', () => {
         try {
             const response = await searchMusic(keyword)
             // 设置状态为成功
-            searchStatus.value = SearchStatus.SUCCESS
+            searchStatus.value = musicEnum.SearchStatus.SUCCESS
             // 设置搜索结果
             searchResults.value = response.data
         } catch (error: any) {
             // 设置状态为错误
-            searchStatus.value = SearchStatus.ERROR
+            searchStatus.value = musicEnum.SearchStatus.ERROR
             // 设置错误信息
             errorMessage.value = error.message
         }

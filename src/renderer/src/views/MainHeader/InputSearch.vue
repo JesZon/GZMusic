@@ -14,7 +14,7 @@
 import { IconSearch } from '@arco-design/web-vue/es/icon'
 
 // 引入状态管理库
-import { useMusicSearchStore } from '@renderer/store'
+import { useMusicSearchStore } from '@renderer/store/modules/musicSearch'
 
 // 全局通讯
 import emitter from "@renderer/utils/emitter";

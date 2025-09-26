@@ -14,7 +14,7 @@
 
                     <a-space size="small" class="control" direction="vertical" fill>
                         <div class="music-info">
-                            知我 - 国风堂/哦漏
+                            {{ currentMusic.name }}
                         </div>
                         <a-space size="medium" class="music-control">
                             <div class="icon-box">
@@ -100,6 +100,13 @@
 
 <script lang="ts" setup name="PlayFooter">
 import PlayMusic from "@renderer/components/PlayMusic/index.vue"
+import { storeToRefs } from 'pinia'
+
+import { useMusicPlayStore } from '@renderer/store/modules/musicPlay'
+const musicPlayStore = useMusicPlayStore()
+const { 
+    currentMusic
+} = storeToRefs(musicPlayStore)
 </script>
 
 <style lang="scss" scoped>
